@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ashfall — hack'n'slash fantasy</title>
+<meta name="description" content="Ashfall : hack'n'slash fantasy en développement. Huit classes, des sorts qu'on modifie par supports, une campagne qui se rejoue plus dure. Évaluation gratuite pour Windows.">
+<meta property="og:title" content="Ashfall — hack'n'slash fantasy">
+<meta property="og:description" content="Huit classes, 44 sorts, 52 supports. Une campagne qui se rejoue plus dure. Évaluation gratuite.">
+<meta property="og:image" content="media/hero.jpg">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="media/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">ASHFALL</span>
+    <nav>
+      <a href="#trailer">Bande-annonce</a>
+      <a href="#apercu">Aperçu</a>
+      <a href="#galerie">Captures</a>
+      <a href="#jeu">Le jeu</a>
+      <a href="#roadmap">Feuille de route</a>
+      <a href="#changelog">Mises à jour</a>
+      <a href="#telecharger">Télécharger</a>
+      <a href="wiki/index.html">Wiki</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <img class="bg" src="media/shot_hub.jpg" alt="">
+  <div class="veil"></div>
+  <div class="inner wrap">
+    <div class="tag">Hack'n'slash fantasy</div>
+    <h1>ASHFALL</h1>
+    <div class="actions">
+      <a class="btn" href="https://github.com/berzerkk/ashfall-releases/releases/latest">Télécharger pour Windows</a>
+      <a class="btn ghost" href="#trailer">Voir la bande-annonce</a>
+    </div>
+  </div>
+</div>
+
+<section id="trailer">
+  <div class="wrap">
+    <h2>Bande<span class="accent">-</span>annonce</h2>
+    <div class="video-frame">
+      <video controls preload="metadata" poster="media/poster.jpg" playsinline>
+        <source src="media/trailer.mp4" type="video/mp4">
+        Votre navigateur ne lit pas la vidéo — <a href="media/trailer.mp4">le fichier est ici</a>.
+      </video>
+    </div>
+  </div>
+</section>
+
+<section id="apercu">
+  <div class="wrap">
+    <h2>Aperçu</h2>
+    <h3 class="kicker">Sorts</h3>
+    <div class="kx-row" id="show-skills"></div>
+    <h3 class="kicker">Supports</h3>
+    <div class="kx-row" id="show-supports"></div>
+    <h3 class="kicker">Objets</h3>
+    <div class="kx-row tiles" id="show-items"></div>
+
+    <div class="tal" id="tree"></div>
+  </div>
+</section>
+
+<section id="galerie">
+  <div class="wrap">
+    <h2>Captures</h2>
+    <div class="gallery" id="gallery">
+      <figure><img loading="lazy" src="media/shot_hub.jpg" alt="L'île de Hautecrête"><figcaption>L'île de Hautecrête — le hub</figcaption></figure>
+      <figure><img loading="lazy" src="media/shot_forest.jpg" alt="La forêt de Verdeclat"><figcaption>La forêt de Verdeclat</figcaption></figure>
+      <figure><img loading="lazy" src="media/shot_desert.jpg" alt="Le désert des Ossements"><figcaption>Le désert des Ossements</figcaption></figure>
+      <figure><img loading="lazy" src="media/shot_volcano.jpg" alt="La faille Écarlate"><figcaption>La faille Écarlate</figcaption></figure>
+      <figure><img loading="lazy" src="media/ui_inventory.jpg" alt="Inventaire et personnage"><figcaption>Inventaire et feuille de personnage</figcaption></figure>
+      <figure><img loading="lazy" src="media/ui_talents.jpg" alt="Arbre de talents"><figcaption>Arbre de talents</figcaption></figure>
+      <figure><img loading="lazy" src="media/ui_skills.jpg" alt="Compétences et supports"><figcaption>Compétences et supports</figcaption></figure>
+      <figure><img loading="lazy" src="media/ui_map.jpg" alt="La carte"><figcaption>La carte : actes, paliers, affixes</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="jeu">
+  <div class="wrap">
+    <h2>Le jeu</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Huit classes</h3>
+        <p>Gardien de braise, arcaniste, rôdeuse, invocateur, pyromancien, tisse-givre, mande-tempête, porte-peste. Une ressource par classe, une mécanique par classe, et une couleur pour se reconnaître dans la mêlée.</p>
+      </div>
+      <div class="card">
+        <h3>Sorts et supports</h3>
+        <p>Un sort de base, puis des supports qui changent sa géométrie : plus de projectiles, chaîne, zone élargie, dégâts convertis. Les mauvais mariages se voient tout de suite.</p>
+      </div>
+      <div class="card">
+        <h3>Arbre de talents</h3>
+        <p>Des points à chaque niveau, des nœuds qui ne font pas la même chose, et le droit de se tromper : le respec est là.</p>
+      </div>
+      <div class="card">
+        <h3>Butin</h3>
+        <p>Raretés, affixes, objets légendaires avec un effet qui ne sort d'aucun barème. Chaque ramassage compare avec ce que vous portez.</p>
+      </div>
+      <div class="card">
+        <h3>Forge</h3>
+        <p>Recyclage, retrait et ajout d'affixes, montée en rareté. De quoi sauver une base correcte au lieu de la jeter.</p>
+      </div>
+      <div class="card">
+        <h3>Cauchemars</h3>
+        <p>Un donjon bouclé se relance avec des modificateurs tirés au moment d'ouvrir la carte. Le même couloir, deux fois, ne se joue pas pareil.</p>
+      </div>
+      <div class="card">
+        <h3>Arène sans fin</h3>
+        <p>Des vagues, des élites, une vague record qui reste affichée. C'est là qu'on va tester si la build tient.</p>
+      </div>
+      <div class="card">
+        <h3>Lisibilité</h3>
+        <p>Télégraphes au sol par type d'attaque, dégâts abrégés, minimap qui suit vraiment les murs. Ce qui tue, on le voit venir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <h2>Feuille de route</h2>
+    <div class="roadmap">
+
+      <div class="rm-col">
+        <h3><span class="chip now">en cours</span></h3>
+        <ul>
+          <li><strong>Nouvelles classes</strong> — une ressource et une mécanique qui ne recopient pas les huit existantes.</li>
+          <li><strong>Nouveaux actes</strong> — de nouvelles terres derrière la faille Écarlate, avec leur palette et leur musique.</li>
+          <li><strong>Améliorations visuelles</strong> — sols, eau, effets de sorts et d'impacts.</li>
+          <li><strong>Interface et lisibilité</strong> — fiches d'objets et de sorts unifiées, infos de combat plus nettes.</li>
+        </ul>
+      </div>
+
+      <div class="rm-col">
+        <h3><span class="chip next">prévu</span></h3>
+        <ul>
+          <li><strong>Nouveaux sorts</strong> — de quoi remplir les trous de chaque classe, élément par élément.</li>
+          <li><strong>Nouveaux supports</strong> — plus de façons de casser un sort, y compris des supports qui se contredisent.</li>
+          <li><strong>Auras et arbre de talents</strong> — arbre plus profond, auras à réserver et à faire évoluer.</li>
+          <li><strong>Plus de légendaires</strong> — des objets qui créent une build au lieu de l'arrondir.</li>
+          <li><strong>Craft retravaillé</strong> — verrouillage d'affixe, issues claires, moins de clics.</li>
+          <li><strong>Mécaniques de combat</strong> — de nouvelles façons de prendre un coup et d'en rendre.</li>
+        </ul>
+      </div>
+
+      <div class="rm-col">
+        <h3><span class="chip later">plus tard</span></h3>
+        <ul>
+          <li><strong>Mécaniques dans les cartes</strong> — des événements et des règles de zone, pas seulement des affixes.</li>
+          <li><strong>Fin de jeu</strong> — un vrai système pour mesurer une build et la pousser.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="changelog">
+  <div class="wrap">
+    <h2>Mises à jour</h2>
+    <p class="sub"><a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Le journal sur GitHub</a></p>
+    <div class="log" id="log"></div>
+  </div>
+</section>
+
+<section id="telecharger">
+  <div class="wrap">
+    <h2>Télécharger</h2>
+    <p class="sub">Version 0.4.0, Windows 10/11 64 bits. Gratuit.</p>
+    <div class="dl">
+      <div class="box">
+        <h3 style="margin-top:0;color:var(--gold2)">Ashfall.exe</h3>
+        <p style="color:var(--dim);margin-top:0">
+          Un fichier de <strong>1,2 Go</strong>. Double-clic, ça se lance : pas d'installateur, pas de launcher,
+          pas de compte.
+        </p>
+        <div class="actions" style="justify-content:flex-start;margin-top:18px">
+          <a class="btn" href="https://github.com/berzerkk/ashfall-releases/releases/latest">Télécharger Ashfall.exe</a>
+          <a class="btn ghost" href="https://github.com/berzerkk/ashfall-releases/releases">Toutes les versions</a>
+        </div>
+        <div class="meta">
+          Pour mettre à jour sans retélécharger 1,2 Go : remplacez <code>ashfall.pck</code> à côté de l'exécutable.
+          Sauvegardes dans <code>%APPDATA%\Godot\app_userdata\Ashfall</code>.
+        </div>
+      </div>
+      <div class="box">
+        <h3 style="margin-top:0;color:var(--gold2)">Configuration</h3>
+        <ul>
+          <li>Windows 10/11 64 bits</li>
+          <li>Carte graphique Vulkan (GTX 900 ou plus récente)</li>
+          <li>8 Go de RAM, 2,5 Go de disque</li>
+          <li>Clavier et souris</li>
+          <li>Français uniquement pour l'instant</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Ashfall</span><span class="sep">·</span>
+    <span>Version 0.4.0</span><span class="sep">·</span>
+    <a href="https://github.com/berzerkk/ashfall-releases/releases">Versions</a><span class="sep">·</span>
+    <a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Journal des changements</a>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden>
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Fermer">✕</button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Précédent">‹</button>
+  <img id="lb-img" alt="">
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Suivant">›</button>
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<div class="kx-tip" id="kx-tip" hidden></div>
+
+<script src="data/showcase.js"></script>
+<script src="data/tree.js"></script>
+<script src="data/changelog.js"></script>
+<script src="app.js"></script>
+<script src="talent-tree.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashfall — wiki</title>
+  <link rel="icon" href="../media/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#skills">ASHFALL <span>WIKI</span></a>
+    <a class="back" href="../index.html">← Le jeu</a>
+    <p class="subtitle">Référence du jeu</p>
+    <nav id="navigation" aria-label="Rubriques"></nav>
+    <footer><span class="status-dot"></span><span id="status" role="status">Connexion aux données…</span><small>Lecture seule</small></footer>
+  </aside>
+  <main>
+    <header><div><p class="eyebrow" id="version">DONNÉES DU JEU</p><h1 id="heading">Compétences</h1></div><span class="count" id="count"></span></header>
+    <div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Rechercher par nom, effet, identifiant…" aria-label="Rechercher"></label><select id="facet" aria-label="Filtrer"></select></div>
+    <div id="error" role="alert" hidden></div>
+    <div class="workspace"><section class="results" aria-label="Liste des entrées"><div id="results"></div></section><article id="detail" aria-label="Détails de l’entrée"></article></div>
+  </main>
+</body>
+</html>
