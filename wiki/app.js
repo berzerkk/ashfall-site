@@ -35,7 +35,7 @@ function secondary(entry) {
 function badge(entry) { return entry.section === 'legendary' ? `<span class="badge t${Number(entry.data.tier) || 4}">T${Number(entry.data.tier) || 4}</span>` : ''; }
 function navigation() {
   const link = id => { const s = catalogue.sections.find(s => s.id === id); return s ? `<a href="#${id}" class="${section === id ? 'active' : ''}"><span>${escape(s.name)}</span><small>${s.count}</small></a>` : ''; };
-  $('#navigation').innerHTML = `<a href="#all" class="${section === 'all' ? 'active' : ''}"><span>Tout le contenu</span><small>${catalogue.entries.length}</small></a>` + order.map(([group, ids]) => `<div class="nav-group">${group}</div>${ids.map(link).join('')}`).join('') + `<div class="nav-group">Analyse</div><a class="nav-sources ${section === 'curves' ? 'active' : ''}" href="#curves"><span>Progression</span></a><a class="nav-sources ${section === 'todo' ? 'active' : ''}" href="#todo"><span>Feuille de route</span></a>`;
+  $('#navigation').innerHTML = `<a href="#all" class="${section === 'all' ? 'active' : ''}"><span>Tout le contenu</span><small>${catalogue.entries.length}</small></a>` + order.map(([group, ids]) => `<div class="nav-group">${group}</div>${ids.map(link).join('')}`).join('') + `<div class="nav-group">Analyse</div><a class="nav-sources ${section === 'curves' ? 'active' : ''}" href="#curves"><span>Progression</span></a>`;
 }
 function facetValue(entry) {
   if (section === 'legendary') return 'T' + entry.data.tier;
@@ -585,7 +585,7 @@ function route() {
   const hash = location.hash.slice(1), index = hash.indexOf('/');
   const next = (index < 0 ? hash : hash.slice(0,index)) || 'skills';
   if (next !== section) { filter = ''; limit = 120; $('#search').value = ''; }
-  section = catalogue.sections.some(s=>s.id === next) || ['all','curves','todo'].includes(next) ? next : 'skills';
+  section = catalogue.sections.some(s=>s.id === next) || ['all','curves'].includes(next) ? next : 'skills';
   try { selected = index < 0 ? '' : decodeURIComponent(hash.slice(index+1)); } catch { selected = ''; }
   $('#heading').textContent = section === 'all' ? 'Tout le contenu' : section === 'sources' ? 'Fichiers sources' : section === 'curves' ? 'Progression' : section === 'prompts' ? 'Réglages des prompts' : section === 'sounds' ? 'Sons' : section === 'todo' ? 'Feuille de route' : catalogue.sections.find(s=>s.id === section)?.name || section;
   navigation(); prepareFacet(); renderList();
