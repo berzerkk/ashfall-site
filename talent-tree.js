@@ -168,6 +168,13 @@
         var inner = document.createElement('span');
         inner.className = 'diamond';
         el.appendChild(inner);
+        if (n.icon) {
+          // icône générée du nœud (mêmes images qu'en jeu), grisée tant que le nœud n'est pas pris
+          var img = document.createElement('img');
+          img.className = 'tal-ico' + (rank > 0 ? '' : ' dim');
+          img.src = n.icon; img.alt = ''; img.loading = 'lazy';
+          el.appendChild(img);
+        }
         var badge = document.createElement('span');
         badge.className = 'badge' + (full ? ' full' : (rank > 0 ? ' on' : ''));
         badge.textContent = rank + '/' + n.max;

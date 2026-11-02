@@ -500,3 +500,13 @@ h3.kicker .count { color: #5f6a7c; letter-spacing: 0.06em; margin-left: 6px; }
   line-height: 1.2;
   pointer-events: none;
 }
+
+/* icônes générées des nœuds de talents (même source que le jeu) */
+.tal-node .tal-ico { position: absolute; left: 15.5%; top: 15.5%; width: 69%; height: 69%; border-radius: 50%; object-fit: cover; pointer-events: none; box-shadow: 0 0 0 1px rgba(0,0,0,.55); }
+.tal-node .tal-ico.dim { filter: grayscale(0.85) brightness(0.55); }
+
+/* journal : introduction de version et mise en forme en ligne */
+.ver-body .ver-intro { color: #c9cfd8; font-size: 1.02em; margin: 6px 0 14px; line-height: 1.55; }
+.ver-body strong { color: #fff3dc; font-weight: 700; }
+.ver-body em { color: #e8b04a; font-style: normal; }
+.ver-body code { color: #4fc3b0; background: rgba(79, 195, 176, 0.08); padding: 0 4px; border-radius: 3px; }

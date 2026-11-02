@@ -106,6 +106,14 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
   window.addEventListener('scroll', hide, { passive: true });
 
+  // Markdown en ligne du journal : **gras**, *italique*, `code` (après échappement HTML)
+  function md(t) {
+    return esc(t)
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/`(.+?)`/g, '<code>$1</code>');
+  }
+
   // ───────────────────────────── journal ─────────────────────────────
   var log = window.ASHFALL_LOG || [];
   var host = document.getElementById('log');
@@ -115,9 +123,10 @@
       d.className = 'ver';
       if (i === 0) d.open = true;
       var body = '<div class="ver-body">';
+      if (v.intro) body += '<p class="ver-intro">' + md(v.intro) + '</p>';
       v.groups.forEach(function (g) {
         if (g.title) body += '<h4>' + esc(g.title) + '</h4>';
-        body += '<ul>' + g.items.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>';
+        body += '<ul>' + g.items.map(function (t) { return '<li>' + md(t) + '</li>'; }).join('') + '</ul>';
       });
       body += '</div>';
       d.innerHTML = '<summary><span class="vtag">' + esc(v.ver) + '</span><span class="vtitle">' + esc(v.title) + '</span></summary>' + body;
