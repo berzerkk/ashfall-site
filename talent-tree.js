@@ -5,6 +5,8 @@
   'use strict';
 
   var CW = 176, RH = 118, TOP = 46, SZ_S = 60, SZ_M = 76;
+  // même règle que Talents.col_threshold : au-delà de la liste, +3 points par colonne
+  function colNeed(thr, c) { return c < thr.length ? (thr[c] || 0) : (thr[thr.length - 1] || 0) + 3 * (c - thr.length + 1); }
 
   function makeRenderer(bind, esc) {
     function fmt(labels, key, val) {
@@ -36,7 +38,7 @@
           h += '<span style="color:#7d8796">Total rang ' + rank + '/' + n.max + ' :</span><br>' + statLines(labels, n.stats, rank, '#4fc3b0');
         }
       }
-      var need = thr[n.col] || 0;
+      var need = colNeed(thr, n.col);
       if (need > 0 && total < need) {
         h += '<span style="color:#e85555">Requiert ' + need + ' pts (' + total + '/' + need + ')</span><br>';
       }
@@ -109,7 +111,7 @@
       canvas.style.height = H + 'px';
 
       for (var c = 0; c <= maxCol; c++) {
-        var need = thr[c] || 0;
+        var need = colNeed(thr, c);
         var openC = total >= need;
         var band = document.createElement('div');
         band.className = 'tal-band' + (openC ? ' open' : '');
@@ -151,7 +153,7 @@
         var isMed = n.kind === 'medium';
         var sz = isMed ? SZ_M : SZ_S;
         var p = pos[n.id];
-        var canAl = rank < n.max && total >= (thr[n.col] || 0) && (!n.req || (alloc[n.req] || 0) > 0);
+        var canAl = rank < n.max && total >= colNeed(thr, n.col) && (!n.req || (alloc[n.req] || 0) > 0);
         var full = rank >= n.max;
         var nc = rank > 0 ? treeCol : (canAl ? '#4fc3b0' : '#3a4352');
 

@@ -113,5 +113,8 @@
 .prio.p1 { background: #c98a1f; color: #101014; }
 .prio.p2 { background: #3f6f8f; color: #fff; }
 .prio.p3 { background: #3a3a45; color: #cfcfd6; }
+.chart-legend { margin-left: 10px; text-transform: none; letter-spacing: 0; font-size: 11.5px; opacity: .95; }
+.chart-legend span { margin-right: 10px; }
+.chart-note { margin: -2px 0 8px; font-size: 12px; opacity: .65; }
 
 .back{margin:-8px 0 18px;font-size:12.5px;color:#8a93a3;text-decoration:none}.back:hover{color:#e8c46a}
