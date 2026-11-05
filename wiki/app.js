@@ -113,7 +113,7 @@ const MAX_LEVEL = 100;
 const fr = (v, d = 0) => Number(v).toLocaleString('fr-FR', { maximumFractionDigits: d, minimumFractionDigits: d });
 const kfmt = (v) => (v >= 1e6 ? fr(v / 1e6, 1) + 'M' : v >= 1000 ? fr(v / 1000, v >= 10000 ? 0 : 1) + 'k' : fr(v, v < 10 ? 1 : 0));
 // main.gd xp_to_next
-function xpToNext(n) { let b = 30 * Math.pow(n, 1.55) + 20 * n; if (n > 55) b *= Math.pow(1.07, n - 55); return Math.round(b); }
+function xpToNext(n) { let b = 30 * Math.pow(n, 1.55) + 20 * n; if (n < 10) b *= 1.2 - 0.2 * (n - 1) / 9; if (n > 55) b *= Math.pow(1.07, n - 55); return Math.round(b); }
 // enemy.gd : XP d'un monstre, PV / dégâts de base, PV resserrés (hors boss)
 function monXp(base, lvl) { return base * (1 + 0.18 * (lvl - 1)) * (1 + 0.015 * (lvl - 1)); }
 function lifeBase(b) { return 30 * Math.pow(Math.max(1, b) / 30, 0.75); }
@@ -210,7 +210,8 @@ function simulateProgress(M, L) {
       life: avgLife * (tier.hp || 1), dps: avgDps * (tier.dmg || 1), speed: avgSpd, count, packs });
   };
   const all = [];
-  for (const map of M.maps || []) for (const z of map.levels || []) all.push([z, map.id]);
+  // cartes « bac à sable » (actes V à VII, hors campagne) : exclues de la progression simulée, comme dans le jeu
+  for (const map of (M.maps || []).filter((m) => !m.sandbox)) for (const z of map.levels || []) all.push([z, map.id]);
   all.forEach(([z, act]) => playZone(z, z.lvl, act, 0));
   for (const t of (M.tiers || []).filter((t) => t.id > 0)) all.forEach(([z, act], i) => playZone(z, Math.min(100, (t.lvlAdd || 58) + Math.round(0.8 * i)), act, t.id));
   return zones;
