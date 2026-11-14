@@ -11,7 +11,7 @@ const fieldNames = {name:'Nom', desc:'Description', description:'Description', b
   model:'Ressource du jeu (non affichée)', path:'Chemin', icon:'Icône source', text:'Description', role:'Rôle', parent:'Groupe'};
 let catalogue, section = 'skills', selected = '', filter = '', limit = 120, requestActive = false;
 let byId = new Map();
-let iconDraft = null;
+
 const order = [
   ['Personnage',['classes','ascensions','trees','talents','atlas']],
   ['Compétences',['skills','supports']],
@@ -48,34 +48,12 @@ function prepareFacet() {
   if (!values.includes(filter)) filter = '';
   $('#facet').value = filter;
 }
-function sourceEntries() { return catalogue.sources.map(s => ({key:s.id, section:'sources', id:s.id, name:s.id, source:s.id, pointer:'', description:s.format === 'json' ? 'Données JSON complètes' : 'Constantes et code source du jeu', data:s.data, notices:s.notices, code:s.code})); }
 function candidates() {
   const query = fold($('#search').value).trim();
-  return (section === 'sources' ? sourceEntries() : catalogue.entries.filter(e => section === 'all' || e.section === section)).filter(e =>
+  return (catalogue.entries.filter(e => section === 'all' || e.section === section)).filter(e =>
     (!filter || facetValue(e) === filter) && (!query || fold([e.name,e.id,e.parent || '',JSON.stringify(e.data)].join(' ')).includes(query)));
 }
 function renderList() {
-  if (section === 'prompts') {
-    $('#count').textContent = '4 modèles';
-    $('#results').innerHTML = '<p class="empty">Modèles de prompt partagés par famille.</p>';
-    $('#detail').innerHTML = promptSettingsView();
-    fillPromptSettings();
-    return;
-  }
-  if (section === 'todo') {
-    $('#count').textContent = 'feuille de route';
-    $('#results').innerHTML = '<p class="empty">Points à améliorer et contenu à produire.</p>';
-    $('#detail').innerHTML = todoView();
-    fillTodo();
-    return;
-  }
-  if (section === 'sounds') {
-    $('#count').textContent = 'bibliothèque';
-    $('#results').innerHTML = '<p class="empty">Sons du jeu.</p>';
-    $('#detail').innerHTML = soundsView();
-    fillSounds();
-    return;
-  }
   if (section === 'curves') {
     $('#count').textContent = '11 graphiques';
     $('#results').innerHTML = '<p class="empty">Courbes de progression calculées depuis le code du jeu.</p>';
@@ -87,10 +65,10 @@ function renderList() {
   if (!rows.some(e => e.key === selected)) selected = rows[0]?.key || '';
   const position = rows.findIndex(e => e.key === selected);
   if (position >= limit) limit = Math.ceil((position + 1) / 120) * 120;
-  $('#results').innerHTML = rows.slice(0,limit).map(e => `<a class="result ${selected === e.key ? 'active' : ''}" href="${href(e)}">${section === 'sources' ? '' : icon(e)}<span class="result-text"><span class="result-name">${escape(e.name)}</span><span class="result-id">${escape(secondary(e))}</span></span></a>`).join('') || '<p class="empty">Aucune entrée ne correspond à cette recherche.</p>';
+  $('#results').innerHTML = rows.slice(0,limit).map(e => `<a class="result ${selected === e.key ? 'active' : ''}" href="${href(e)}">${icon(e)}<span class="result-text"><span class="result-name">${escape(e.name)}</span><span class="result-id">${escape(secondary(e))}</span></span></a>`).join('') || '<p class="empty">Aucune entrée ne correspond à cette recherche.</p>';
   if (rows.length > limit) $('#results').insertAdjacentHTML('beforeend', '<button class="result more">Afficher les 120 entrées suivantes</button>');
   $('#detail').innerHTML = rows.length ? detail(rows.find(e => e.key === selected)) : '<p class="empty">Les données sont lues directement dans le jeu.</p>';
-  hydrateIconPanel();
+
 }
 function affixRolls(entry) {
   const p = entry.affixPools;
@@ -286,311 +264,6 @@ function curvesView() {
   return '<div class="charts">' + out.join('') + '</div>';
 }
 
-function promptSettingsView() {
-  return '<div class="prompt-settings"></div>';
-}
-
-async function fillPromptSettings() {
-  const box = $('.prompt-settings');
-  if (!box) return;
-  const response = await fetch('/api/prompt/templates', { cache: 'no-store' });
-  const templates = await response.json().catch(() => ({}));
-  templatesCache = templates;
-  const ids = Object.keys(templates).sort();
-  box.innerHTML =
-    '<p class="technical">Un modèle par famille. La partie spécifique de chaque icône est stockée à part et reste modifiable fiche par fiche. Le prompt envoyé = modèle + partie spécifique.</p>' +
-    ids.map((id) =>
-      '<div class="tpl"><div class="tpl-head"><h4>' + escape(id) + '</h4>' +
-      '<button class="tpl-remove" type="button" data-id="' + escape(id) + '">Supprimer</button></div>' +
-      '<textarea class="tpl-text" data-id="' + escape(id) + '" rows="5" spellcheck="false">' + escape(templates[id]) + '</textarea></div>'
-    ).join('') +
-    '<div class="tpl-add"><label class="icon-field">Nouveau modèle (identifiant)<input class="tpl-new-id" type="text" placeholder="ex. talent" maxlength="24"></label>' +
-    '<button class="tpl-add-btn" type="button">Créer</button></div>' +
-    '<div class="icon-row"><button class="tpl-save" type="button">Enregistrer les modèles</button><span class="tpl-status"></span></div>';
-}
-
-async function savePromptSettings(button) {
-  const box = button.closest('.prompt-settings');
-  const status = box.querySelector('.tpl-status');
-  const payload = {};
-  for (const area of box.querySelectorAll('.tpl-text')) payload[area.dataset.id] = area.value;
-  try {
-    const response = await fetch('/api/prompt/templates', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-    const data = await response.json();
-    if (!response.ok) throw Error(data.error || 'échec');
-    templatesCache = data.templates;
-    status.textContent = ' modèles enregistrés';
-    status.className = 'tpl-status ok';
-  } catch (error) {
-    status.textContent = ' ' + error.message;
-    status.className = 'tpl-status ko';
-  }
-}
-
-async function addPromptTemplate(button) {
-  const box = button.closest('.prompt-settings');
-  const input = box.querySelector('.tpl-new-id');
-  const id = (input.value || '').trim().toLowerCase();
-  if (!/^[a-z0-9_-]{2,24}$/.test(id)) { box.querySelector('.tpl-status').textContent = ' identifiant invalide (a-z, 0-9, - et _, 2 à 24)'; return; }
-  const payload = {};
-  for (const area of box.querySelectorAll('.tpl-text')) payload[area.dataset.id] = area.value;
-  payload[id] = payload[id] || 'Polished fantasy game icon in the style of Torchlight Infinite, smooth rendered painting, vivid saturated colours, square full-bleed composition, one bold central subject, strong colour contrast, no text, no letters, no border, no frame, no UI';
-  const response = await fetch('/api/prompt/templates', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) { box.querySelector('.tpl-status').textContent = ' ' + (data.error || 'échec'); return; }
-  templatesCache = data.templates;
-  await fillPromptSettings();
-}
-
-async function removePromptTemplate(button) {
-  const box = button.closest('.prompt-settings');
-  const id = button.dataset.id;
-  const payload = {};
-  for (const area of box.querySelectorAll('.tpl-text')) payload[area.dataset.id] = area.value;
-  payload[id] = '';
-  const response = await fetch('/api/prompt/templates', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) { box.querySelector('.tpl-status').textContent = ' ' + (data.error || 'échec'); return; }
-  templatesCache = data.templates;
-  await fillPromptSettings();
-}
-
-function soundsView() {
-  return '<div class="sounds"><p class="technical">Sons synthétisés par le jeu, exportés en WAV (<code>sfxdump</code> dans la console de debug). Modifier un son = modifier <code>scripts/game/sfx.gd</code> puis relancer <code>sfxdump</code>.</p><div class="sounds-list"><p class="empty">Chargement…</p></div></div>';
-}
-
-async function fillSounds() {
-  const box = $('.sounds-list');
-  if (!box) return;
-  let data;
-  try { data = await (await fetch('sfx.json', { cache: 'no-store' })).json(); }
-  catch { box.innerHTML = '<p class="empty">Liste des sons indisponible.</p>'; return; }
-  if (!data.count) {
-    box.innerHTML = '<p class="empty">Aucun son exporté. Lance <code>sfxdump</code> dans la console du jeu (touche ²).</p>';
-    return;
-  }
-  const needle = ($('#search').value || '').toLowerCase();
-  const rows = data.sounds.filter((s) => !needle || s.name.toLowerCase().includes(needle));
-  box.innerHTML = '<p class="technical">' + rows.length + ' / ' + data.count + ' son(s) — ' + escape(data.dir) + '</p>' +
-    rows.map((s) =>
-      '<div class="sound-row"><span class="sound-name">' + escape(s.name) + '</span>' +
-      '<audio controls preload="none" src="sfx/' + encodeURIComponent(s.file) + '"></audio>' +
-      '<span class="sound-size">' + (s.bytes / 1024).toFixed(0) + ' Ko</span></div>'
-    ).join('');
-}
-
-function todoView() {
-  return '<div class="todo"><p class="technical">Feuille de route du projet, comparée aux références du genre. Clique une ligne pour la marquer faite ou à refaire.</p>' +
-    '<div class="todo-filters">' +
-    '<label class="icon-field">Axe<select id="todo-axis"><option value="">tous</option></select></label>' +
-    '<label class="icon-field">Priorité<select id="todo-priority"><option value="">toutes</option><option value="P0">P0 — bloquant</option><option value="P1">P1 — important</option><option value="P2">P2 — utile</option><option value="P3">P3 — plus tard</option></select></label>' +
-    '<label class="icon-field">Statut<select id="todo-status"><option value="">tous</option><option value="todo">à faire</option><option value="done">fait</option></select></label>' +
-    '<span class="todo-counts"></span>' +
-    '</div><div class="todo-list"></div></div>';
-}
-
-let todoData = null;
-
-async function fillTodo() {
-  const box = $('.todo-list');
-  if (!box) return;
-  if (!todoData) {
-    try { todoData = await (await fetch('todo.json', {cache:'no-store'})).json(); }
-    catch { box.innerHTML = '<p class="empty">TODO indisponible (data/todo.json).</p>'; return; }
-    const axisSelect = $('#todo-axis');
-    if (axisSelect && axisSelect.options.length <= 1) {
-      for (const a of todoData.axes) {
-        const o = document.createElement('option');
-        o.value = a.id; o.textContent = a.label;
-        axisSelect.appendChild(o);
-      }
-    }
-  }
-  const axis = $('#todo-axis')?.value || '';
-  const priority = $('#todo-priority')?.value || '';
-  const status = $('#todo-status')?.value || '';
-  const labels = Object.fromEntries(todoData.axes.map((a) => [a.id, a.label]));
-  const items = todoData.items.filter((i) => (!axis || i.axis === axis) && (!priority || i.priority === priority) && (!status || i.status === status));
-
-  const total = todoData.items.length;
-  const done = todoData.items.filter((i) => i.status === 'done').length;
-  const p0 = todoData.items.filter((i) => i.priority === 'P0' && i.status !== 'done').length;
-  const counts = $('.todo-counts');
-  if (counts) counts.innerHTML = '<b>' + done + '</b> / ' + total + ' fait · <b>' + p0 + '</b> bloquant(s) restant(s)';
-
-  const byAxis = new Map();
-  for (const it of items) {
-    if (!byAxis.has(it.axis)) byAxis.set(it.axis, []);
-    byAxis.get(it.axis).push(it);
-  }
-  const order = ['P0', 'P1', 'P2', 'P3'];
-  box.innerHTML = [...byAxis.entries()].map(([id, list]) =>
-    '<section class="todo-axis"><h4>' + escape(labels[id] || id) + ' <small>(' + list.length + ')</small></h4>' +
-    list.sort((a, b) => order.indexOf(a.priority) - order.indexOf(b.priority)).map((it) =>
-      '<article class="todo-item ' + (it.status === 'done' ? 'done' : '') + '" data-id="' + escape(it.id) + '">' +
-      '<button class="todo-toggle" type="button" aria-label="basculer">' + (it.status === 'done' ? '✓' : '○') + '</button>' +
-      '<div class="todo-body"><div class="todo-title"><span class="prio ' + String(it.priority || 'p3').toLowerCase() + '">' + it.priority + '</span> ' + escape(it.title) + '</div>' +
-      '<div class="todo-detail">' + escape(it.detail) + '</div>' +
-      (it.compare && it.compare !== '—' ? '<div class="todo-compare">Référence : ' + escape(it.compare) + '</div>' : '') +
-      '</div></article>'
-    ).join('') + '</section>'
-  ).join('') || '<p class="empty">Aucun élément pour ces filtres.</p>';
-}
-
-async function toggleTodo(button) {
-  const card = button.closest('.todo-item');
-  const id = card.dataset.id;
-  const item = todoData.items.find((i) => i.id === id);
-  if (!item) return;
-  const next = item.status === 'done' ? 'todo' : 'done';
-  try {
-    const res = { ok: false, json: async () => ({ error: 'Wiki en lecture seule.' }) };
-    const data = await res.json();
-    if (!res.ok) throw Error(data.error || 'échec');
-    item.status = next;
-    await fillTodo();
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-function iconPanel(entry) {
-  const key = entry.resolvedIconKey || entry.iconKey;
-  return '<section class="icon-panel" data-key="' + escape(key) + '">' +
-    '<h3>Icône générée</h3>' +
-    '<div class="icon-sizes" data-sizes></div>' +
-    '<div class="icon-staged" data-staged hidden><h4>Nouvelle version — en attente de validation</h4><div class="icon-sizes" data-staged-sizes></div>' +
-    '<div class="icon-row"><button class="icon-keep" type="button">Garder la nouvelle</button><button class="icon-drop" type="button">Jeter</button><span class="icon-staged-status"></span></div></div>' +
-    '<div class="icon-row">' +
-    '<label class="icon-field">Modèle de prompt<select class="icon-family"></select></label>' +
-    '<button class="icon-generate" type="button">Générer</button>' +
-    '<span class="icon-status"></span>' +
-    '</div>' +
-    '<div class="icon-progress" data-progress hidden><div class="icon-progress-bar"></div></div>' +
-    '<label class="icon-field">Partie spécifique du prompt<textarea class="icon-prompt" rows="6" spellcheck="false" placeholder="Chargement du prompt…"></textarea></label>' +
-    '<details class="icon-details"><summary>Journal de génération</summary><pre class="raw icon-log">—</pre></details>' +
-    '</section>';
-}
-
-function iconSizes(rel) {
-  if (!rel) return '<p class="technical">Aucune image enregistrée pour cette icône.</p>';
-  const dir = rel.replace(/\.[^.]+$/, '');
-  const base = dir.split('/').pop();
-  const files = [['512', dir + '/' + base + '.png'], ['256', dir + '/' + base + '_256.png'], ['128', dir + '/' + base + '_128.png'], ['64', dir + '/' + base + '_64.png']];
-  const stamp = Date.now();
-  return files.map(function (pair) {
-    return '<figure class="icon-size"><img loading="lazy" src="/generated-icons/' + escape(pair[1]) + '?v=' + stamp + '" alt="' + pair[0] + ' px" data-focus="' + escape(pair[1]) + '"><figcaption>' + pair[0] + ' px</figcaption></figure>';
-  }).join('');
-}
-
-let templatesCache = null;
-
-async function templateIds() {
-  if (!templatesCache) {
-    try { templatesCache = await (await fetch('/api/prompt/templates', { cache: 'no-store' })).json(); }
-    catch { templatesCache = {}; }
-  }
-  return Object.keys(templatesCache).sort();
-}
-
-async function hydrateIconPanel() {
-  const panel = $('.icon-panel');
-  if (!panel) return;
-  const key = panel.dataset.key;
-  const area = panel.querySelector('.icon-prompt');
-  const sizes = panel.querySelector('[data-sizes]');
-  const ids = await templateIds();
-  const select = panel.querySelector('.icon-family');
-  if (ids.length) select.innerHTML = ids.map(function (id) { return '<option value="' + escape(id) + '">' + escape(id) + '</option>'; }).join('');
-
-  if (iconDraft && iconDraft.key === key && iconDraft.prompt !== undefined) {
-    area.value = iconDraft.prompt;
-    if (iconDraft.output) sizes.innerHTML = iconSizes(iconDraft.output);
-    return;
-  }
-  try {
-    const response = await fetch('/api/icon/prompt?key=' + encodeURIComponent(key), { cache: 'no-store' });
-    const data = await response.json();
-    if (!response.ok) throw Error(data.error || 'Prompt indisponible');
-    area.value = data.specific || '';
-    area.placeholder = data.specific ? '' : 'Aucune partie spécifique enregistrée.';
-    if (data.family && ids.indexOf(data.family) >= 0) select.value = data.family;
-    sizes.innerHTML = iconSizes(data.output);
-    const staged = panel.querySelector('[data-staged]');
-    staged.hidden = !data.staged;
-    if (data.staged) panel.querySelector('[data-staged-sizes]').innerHTML = iconSizes(data.stagedOutput);
-    iconDraft = { key: key, prompt: area.value, output: data.output };
-    if (!data.generatable) {
-      panel.querySelector('.icon-generate').disabled = true;
-      panel.querySelector('.icon-status').textContent = 'Génération non branchée pour cette famille.';
-    }
-  } catch (error) {
-    area.placeholder = error.message;
-  }
-}
-
-async function decideVersion(button, action) {
-  const panel = button.closest('.icon-panel');
-  const status = panel.querySelector('.icon-staged-status');
-  try {
-    const response = await fetch('/api/icon/' + action, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key: panel.dataset.key }),
-    });
-    const data = await response.json();
-    if (!response.ok) throw Error(data.error || 'échec');
-    status.textContent = action === 'promote' ? ' nouvelle version appliquée (réimporter dans Godot)' : ' version jetée';
-    status.className = 'icon-staged-status ok';
-    const fresh = await (await fetch('/api/icon/prompt?key=' + encodeURIComponent(panel.dataset.key), { cache: 'no-store' })).json();
-    panel.querySelector('[data-sizes]').innerHTML = iconSizes(fresh.output);
-    panel.querySelector('[data-staged]').hidden = !fresh.staged;
-    if (fresh.staged) panel.querySelector('[data-staged-sizes]').innerHTML = iconSizes(fresh.stagedOutput);
-    iconDraft = { key: panel.dataset.key, prompt: fresh.specific || '', output: fresh.output };
-  } catch (error) {
-    status.textContent = ' ' + error.message;
-    status.className = 'icon-staged-status ko';
-  }
-}
-
-async function regenerate(button) {
-  const panel = button.closest('.icon-panel');
-  const key = panel.dataset.key;
-  const specific = panel.querySelector('.icon-prompt').value.trim();
-  const template = panel.querySelector('.icon-family').value;
-  const status = panel.querySelector('.icon-status');
-  const log = panel.querySelector('.icon-log');
-  const progress = panel.querySelector('[data-progress]');
-  button.disabled = true;
-  progress.hidden = false;
-  status.textContent = 'génération…';
-  status.className = 'icon-status';
-  const started = Date.now();
-  const tick = setInterval(function () { status.textContent = 'génération… ' + Math.round((Date.now() - started) / 1000) + ' s'; }, 250);
-  try {
-    const response = await fetch('/api/icon/generate', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key: key, specific: specific, template: template }),
-    });
-    const data = await response.json();
-    log.textContent = data.log || data.error || '—';
-    if (!response.ok) throw Error(data.error || 'échec');
-    status.textContent = 'nouvelle version prête (' + ((Date.now() - started) / 1000).toFixed(1) + ' s)';
-    status.className = 'icon-status ok';
-    iconDraft = null;
-    const fresh = await (await fetch('/api/icon/prompt?key=' + encodeURIComponent(key), { cache: 'no-store' })).json();
-    panel.querySelector('[data-sizes]').innerHTML = iconSizes(fresh.output);
-    panel.querySelector('[data-staged]').hidden = !fresh.staged;
-    if (fresh.staged) panel.querySelector('[data-staged-sizes]').innerHTML = iconSizes(fresh.stagedOutput);
-  } catch (error) {
-    status.textContent = error.message;
-    status.className = 'icon-status ko';
-  } finally {
-    clearInterval(tick);
-    progress.hidden = true;
-    button.disabled = false;
-  }
-}
-
 function openFocus(src) {
   let overlay = $('#focus');
   if (!overlay) {
@@ -609,24 +282,6 @@ function openFocus(src) {
 $('#detail').addEventListener('click', (event) => {
   const focusImg = event.target.closest('[data-focus]');
   if (focusImg) { openFocus(focusImg.src); return; }
-  const saveBtn = event.target.closest('.icon-templates-save');
-  if (saveBtn) { saveTemplates(saveBtn); return; }
-  const tplSave = event.target.closest('.tpl-save');
-  if (tplSave) { savePromptSettings(tplSave); return; }
-  const tplAdd = event.target.closest('.tpl-add-btn');
-  if (tplAdd) { addPromptTemplate(tplAdd); return; }
-  const tplRemove = event.target.closest('.tpl-remove');
-  if (tplRemove) { removePromptTemplate(tplRemove); return; }
-  const keepBtn = event.target.closest('.icon-keep');
-  if (keepBtn) { decideVersion(keepBtn, 'promote'); return; }
-  const todoBtn = event.target.closest('.todo-toggle');
-  if (todoBtn) { toggleTodo(todoBtn); return; }
-  const dropBtn = event.target.closest('.icon-drop');
-  if (dropBtn) { decideVersion(dropBtn, 'discard'); return; }
-  const tplToggle = event.target.closest('.icon-details');
-  if (tplToggle && !tplToggle.open) { const panel = tplToggle.closest('.icon-panel'); if (panel && tplToggle.contains(panel.querySelector('.icon-templates'))) loadTemplatesInto(panel); }
-  const button = event.target.closest('.icon-generate');
-  if (button) regenerate(button);
 });
 function reference(value) {
   const target = byId.get(String(value));
@@ -657,14 +312,13 @@ function detail(entry) {
   const data = entry.data;
   const tags = data?.tags || [];
   const description = entry.description || (typeof data === 'string' ? data : '');
-  return `<div class="entry-heading">${entry.section === 'sources' ? '' : icon(entry,true)}<div><h2>${escape(entry.name)}</h2><div class="technical">${escape(entry.id)}</div></div></div>` +
+  return `<div class="entry-heading">${icon(entry,true)}<div><h2>${escape(entry.name)}</h2><div class="technical">${escape(entry.id)}</div></div></div>` +
     (entry.parent ? `<div class="technical">${escape(catalogue.slotLabels[entry.parent] || entry.parent)}</div>` : '') +
     (tags.length ? `<div class="tags">${tags.map(t=>`<span class="tag">${escape(catalogue.tagLabels[t] || t)}</span>`).join('')}</div>` : '') +
     (description ? `<p class="description">${escape(plain(description))}</p>` : '') +
-    (entry.notices?.length ? `<p class="notice">${entry.notices.length} constantes contiennent des expressions ou chargements de ressources. Leur définition reste consultable dans le code source ci-dessous.</p>` : '') +
     `<h3>Données complètes</h3>${data && typeof data === 'object' ? table(data) : renderValue(data)}` +
     `<h3>Source</h3><details><summary>Voir les données brutes</summary><pre class="raw">${escape(JSON.stringify(data,null,2))}</pre></details>` +
-     +
+    '' +
     (entry.affixPools ? affixRolls(entry) : '') +
     '' +
    
@@ -676,13 +330,11 @@ function route() {
   if (next !== section) { filter = ''; limit = 120; $('#search').value = ''; }
   section = catalogue.sections.some(s=>s.id === next) || ['all','curves'].includes(next) ? next : 'skills';
   try { selected = index < 0 ? '' : decodeURIComponent(hash.slice(index+1)); } catch { selected = ''; }
-  $('#heading').textContent = section === 'all' ? 'Tout le contenu' : section === 'sources' ? 'Fichiers sources' : section === 'curves' ? 'Progression' : section === 'prompts' ? 'Réglages des prompts' : section === 'sounds' ? 'Sons' : section === 'todo' ? 'Feuille de route' : catalogue.sections.find(s=>s.id === section)?.name || section;
+  $('#heading').textContent = section === 'all' ? 'Tout le contenu' : section === 'curves' ? 'Progression' : catalogue.sections.find(s=>s.id === section)?.name || section;
   navigation(); prepareFacet(); renderList();
 }
 async function refresh() {
   if (requestActive) return;
-  // Ne jamais écraser un prompt en cours d'édition dans le panneau d'icône.
-  if (document.activeElement && document.activeElement.closest && document.activeElement.closest('.icon-panel')) return;
   requestActive = true;
   try {
     const response = await fetch('catalogue.json',{cache:'no-store'});
@@ -706,7 +358,6 @@ async function refresh() {
   } finally { requestActive = false; }
 }
 $('#search').addEventListener('input',()=>{limit=120;renderList();});
-$('#detail').addEventListener('change',event=>{ if(event.target.id && event.target.id.indexOf('todo-')===0){ fillTodo(); }});
 $('#facet').addEventListener('change',event=>{filter=event.target.value;limit=120;renderList();});
 $('#results').addEventListener('click',event=>{if(event.target.closest('.more')){limit+=120;renderList();}});
 window.addEventListener('hashchange',()=>{if(catalogue)route();});

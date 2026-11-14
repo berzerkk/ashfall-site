@@ -1,0 +1,17 @@
+{
+  "version": "0.7.0",
+  "date": "2026-11-14",
+  "files": {
+    "ashfall.pck": {
+      "url": "https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/ashfall.pck",
+      "size": 2108648156,
+      "sha256": "b1eee160a8a0966552a4643ecb76c29b55b4d331ff41e6cb9253093afa8efdbe"
+    },
+    "Ashfall.exe": {
+      "url": "https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/Ashfall.exe",
+      "size": 2217863904,
+      "sha256": "b97e0d8429418331826dcd21e49659f5fd67c6c0668fc06beffd6fa8e1f74d3f"
+    }
+  },
+  "changelog": "https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/CHANGELOG.md"
+}
