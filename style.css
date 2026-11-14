@@ -631,3 +631,46 @@ h3.kicker .count { color: #5f6a7c; letter-spacing: 0.06em; margin-left: 6px; }
 .lb-4k:hover { text-decoration: none; border-color: var(--gold); }
 h3.kicker { font-family: inherit; }
 #galerie h3.kicker { margin-top: 44px; }
+
+/* ── classes en icônes ── */
+.class-icons { display: grid; grid-template-columns: repeat(9, 1fr); gap: 14px; margin-top: 30px; }
+.class-ico {
+  --cc: var(--gold);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 0; background: none; border: 0; cursor: help; font: inherit; color: var(--dim);
+}
+.class-ico img {
+  width: 104px; height: 104px; border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--cc) 40%, transparent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--cc) 18%, transparent);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.class-ico span { font-size: 13px; text-align: center; line-height: 1.25; }
+.class-ico:hover img, .class-ico:focus-visible img { transform: translateY(-4px); border-color: var(--cc); box-shadow: 0 0 34px color-mix(in srgb, var(--cc) 45%, transparent); }
+.class-ico:hover span, .class-ico:focus-visible span { color: color-mix(in srgb, var(--cc) 75%, white); }
+.class-ico:focus-visible { outline: none; }
+@media (max-width: 1100px) { .class-icons { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 640px) { .class-icons { grid-template-columns: repeat(3, 1fr); } .class-ico img { width: 84px; height: 84px; } }
+
+/* ── mécaniques : onglets ── */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 28px 0 30px; border-bottom: 1px solid var(--line); }
+.tab {
+  font: inherit; font-size: 15px; color: var(--dim);
+  background: none; border: 0; border-bottom: 2px solid transparent;
+  padding: 10px 16px 12px; margin-bottom: -1px; cursor: pointer;
+}
+.tab:hover { color: var(--text); }
+.tab.on { color: var(--gold2); border-bottom-color: var(--gold); }
+.tab-panel[hidden] { display: none; }
+.meca { display: grid; grid-template-columns: 1fr 1.35fr; gap: 40px; align-items: start; }
+.meca-text p { color: #c3cad6; margin: 0 0 14px; }
+.meca-text .ticks { margin: 0 0 16px; }
+.meca-shots { margin: 0; display: grid; gap: 12px; }
+.meca-shots img {
+  width: 100%; display: block; border-radius: 8px; border: 1px solid var(--line2);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5); cursor: zoom-in; transition: border-color .2s ease;
+}
+.meca-shots img:hover { border-color: var(--gold); }
+@media (max-width: 900px) { .meca { grid-template-columns: 1fr; } }
+.split-text .ticks li { color: #c3cad6; }
+.split-text .ticks strong { color: var(--text); }

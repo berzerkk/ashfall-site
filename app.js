@@ -104,14 +104,31 @@
   var cg = document.getElementById('class-grid');
   if (cg) {
     HOME.classes.forEach(function (c) {
-      var d = document.createElement('div');
-      d.className = 'class-card';
-      if (c.color) d.style.setProperty('--cc', c.color);
-      d.innerHTML = '<img src="' + esc(c.icon) + '" alt="" loading="lazy" width="88" height="88">' +
-        '<div><h3>' + esc(c.name) + '</h3><p>' + esc(c.desc) + '</p></div>';
-      cg.appendChild(d);
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'class-ico';
+      if (c.color) b.style.setProperty('--cc', c.color);
+      b.innerHTML = '<img src="' + esc(c.icon) + '" alt="" loading="lazy" width="104" height="104"><span>' + esc(c.name) + '</span>';
+      var col = c.color || '#e8b04a';
+      bind(b, '<strong style="color:' + esc(col) + '">' + esc(c.name) + '</strong>' +
+        (c.role ? '   <span style="color:#7d8796">' + esc(c.role) + '</span>' : '') +
+        '<br><br><span style="color:#c9cfd8">' + esc(c.desc) + '</span>' +
+        (c.passive ? '<br><br><span style="color:#e8b04a">' + esc(c.passive.name) + '</span><br><span style="color:#9aa5b6">' + esc(c.passive.desc) + '</span>' : ''));
+      cg.appendChild(b);
     });
   }
+  // onglets des mécaniques
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('#mecaniques .tab'));
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var id = t.getAttribute('data-tab');
+      tabs.forEach(function (x) { x.classList.toggle('on', x === t); });
+      Array.prototype.forEach.call(document.querySelectorAll('#mecaniques .tab-panel'), function (p) {
+        var on = p.getAttribute('data-panel') === id;
+        p.hidden = !on; p.classList.toggle('on', on);
+      });
+    });
+  });
   Array.prototype.forEach.call(document.querySelectorAll('[data-fresh]'), function (host) {
     var fam = host.getAttribute('data-fresh');
     icon_grid(host, HOME.fresh.filter(function (s) { return s.family === fam; }).map(function (s) {
@@ -159,11 +176,11 @@
   }
 
   // ───────────────────────────── visionneuse ─────────────────────────────
-  var figs = Array.prototype.slice.call(document.querySelectorAll('#gallery figure img, #gallery-ui figure img, .shot-pair img'));
+  var figs = Array.prototype.slice.call(document.querySelectorAll('#gallery figure img, #gallery-ui figure img, .shot-pair img, .meca-shots img'));
   var full = function (f) { return f.getAttribute('data-full') || f.getAttribute('src'); };
   var label = function (f) {
     var t = f.parentNode.querySelector('figcaption');
-    return t && f.parentNode.tagName === 'FIGURE' && !f.parentNode.classList.contains('shot-pair') ? t.textContent : (f.alt || '');
+    return t ? t.textContent : (f.alt || '');
   };
   var lb = document.getElementById('lb');
   if (figs.length && lb) {
