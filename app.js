@@ -99,6 +99,78 @@
     host.appendChild(frag);
   }
 
+  // ───────────────────────────── héros : braises ─────────────────────────────
+  (function () {
+    var cv = document.getElementById('embers');
+    if (!cv || !cv.getContext) return;
+    var cx = cv.getContext('2d');
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var W = 0, H = 0, dpr = 1, parts = [], last = 0;
+    function size() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var want = Math.round(Math.min(220, W * H / 9000) * (calm ? 0.3 : 1));
+      while (parts.length < want) parts.push(spawn(true));
+      parts.length = want;
+    }
+    function spawn(any) {
+      var big = Math.random() < 0.12;
+      return {
+        x: Math.random() * W, y: any ? Math.random() * H : H + 10,
+        r: big ? 1.8 + Math.random() * 2.2 : 0.6 + Math.random() * 1.4,
+        vy: -(18 + Math.random() * (big ? 30 : 55)), vx: (Math.random() - 0.5) * 14,
+        ph: Math.random() * 6.28, fq: 1.5 + Math.random() * 3, life: 0, max: 5 + Math.random() * 9,
+        hue: 14 + Math.random() * 28, ash: Math.random() < 0.18
+      };
+    }
+    function frame(t) {
+      var dt = Math.min(0.05, (t - (last || t)) / 1000); last = t;
+      cx.clearRect(0, 0, W, H);
+      cx.globalCompositeOperation = 'lighter';
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.life += dt;
+        p.vx += Math.sin(t / 900 + p.ph) * 6 * dt;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        var k = Math.min(1, p.life / 0.8) * Math.max(0, 1 - p.life / p.max) * Math.min(1, p.y / (H * 0.25));
+        var fl = 0.65 + 0.35 * Math.sin(t / 1000 * p.fq * 6.28 + p.ph);
+        var a = Math.max(0, k * fl);
+        if (p.ash) {
+          cx.fillStyle = 'rgba(120,110,105,' + (a * 0.35).toFixed(3) + ')';
+          cx.fillRect(p.x, p.y, p.r * 1.4, p.r * 1.4);
+        } else {
+          var g = cx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+          g.addColorStop(0, 'hsla(' + (p.hue + 20) + ',100%,78%,' + a.toFixed(3) + ')');
+          g.addColorStop(0.25, 'hsla(' + p.hue + ',100%,55%,' + (a * 0.55).toFixed(3) + ')');
+          g.addColorStop(1, 'hsla(' + p.hue + ',100%,40%,0)');
+          cx.fillStyle = g;
+          cx.fillRect(p.x - p.r * 5, p.y - p.r * 5, p.r * 10, p.r * 10);
+        }
+        if (p.y < -20 || p.life > p.max) parts[i] = spawn(false);
+      }
+      cx.globalCompositeOperation = 'source-over';
+      if (!document.hidden) requestAnimationFrame(frame); else last = 0;
+    }
+    size();
+    window.addEventListener('resize', size);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) requestAnimationFrame(frame); });
+    requestAnimationFrame(frame);
+  })();
+
+  // Téléchargement : lien et taille exacte lus dans le manifeste de mise à jour (latest.json)
+  if (window.fetch && location.protocol !== 'file:') {
+    fetch('latest.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (m) {
+      var exe = m && m.files && m.files['Ashfall.exe'];
+      if (!exe) return;
+      Array.prototype.forEach.call(document.querySelectorAll('[data-dl="exe"]'), function (a) { a.href = exe.url; });
+      var go = (exe.size / 1073741824).toFixed(2).replace('.', ',');
+      var oct = String(exe.size).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f');
+      Array.prototype.forEach.call(document.querySelectorAll('[data-size="exe"]'), function (p) { p.textContent = go + ' Go (' + oct + ' octets)'; });
+    }).catch(function () {});
+  }
+
   // ───────────────────────────── accueil : classes, nouveautés, compteurs ─────────────────────────────
   var HOME = window.ASHFALL_HOME || { classes: [], fresh: [], counts: {} };
   var cg = document.getElementById('class-grid');

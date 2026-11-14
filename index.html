@@ -15,7 +15,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="media/favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="media/shots/hero_2560.webp">
 </head>
 <body>
 
@@ -27,7 +26,6 @@
       <a href="#classes">Classes</a>
       <a href="#mecaniques">Mécaniques</a>
       <a href="#galerie">Captures</a>
-      <a href="#jeu">Le jeu</a>
       <a href="#apercu">Aperçu</a>
       <a href="#roadmap">Feuille de route</a>
       <a href="#changelog">Mises à jour</a>
@@ -39,20 +37,15 @@
 </header>
 
 <div class="hero">
-  <picture>
-    <source media="(min-width: 2200px)" srcset="media/shots/hero.jpg">
-    <img class="bg" src="media/shots/hero_2560.webp" alt="">
-  </picture>
+  <canvas class="embers" id="embers" aria-hidden="true"></canvas>
   <div class="veil"></div>
   <div class="inner wrap">
-    <div class="tag">Hack'n'slash fantasy · gratuit</div>
     <h1>ASHFALL</h1>
-    <p class="lead">Neuf classes, des sorts modifiés par des supports, deux ligues et une campagne qui se rejoue en Cauchemar.</p>
+    <div class="version">Version 0.7.0</div>
     <div class="actions">
       <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/Ashfall.exe" data-dl="exe">Télécharger pour Windows</a>
       <a class="btn ghost" href="#nouveautes">Nouveautés de la 0.7.0</a>
     </div>
-    <p class="note">Version 0.7.0 · Windows 10/11 · environ 2 Go · mises à jour automatiques</p>
   </div>
   <div class="stats wrap" id="stats">
     <div><b data-count="classes">9</b><span>classes</span></div>
@@ -235,52 +228,12 @@
 
 <section id="trailer" class="alt">
   <div class="wrap">
-    <h2>Bande<span class="accent">-</span>annonce</h2>
+    <h2>Bande-annonce</h2>
     <div class="video-frame">
       <video controls preload="metadata" poster="media/poster.jpg" playsinline>
         <source src="media/trailer.mp4" type="video/mp4">
         Votre navigateur ne lit pas la vidéo — <a href="media/trailer.mp4">le fichier est ici</a>.
       </video>
-    </div>
-  </div>
-</section>
-
-<section id="jeu">
-  <div class="wrap">
-    <h2>Le jeu</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Sorts et supports</h3>
-        <p>Plus de projectiles, chaîne, zone, conversion : les supports changent la forme d'un sort.</p>
-      </div>
-      <div class="card">
-        <h3>Talents</h3>
-        <p>Arbres de dieux avec talents majeurs, arbre de classe, respec possible.</p>
-      </div>
-      <div class="card">
-        <h3>Butin</h3>
-        <p>Affixes, légendaires, objets glitchés et filtre de butin complet.</p>
-      </div>
-      <div class="card">
-        <h3>Forge</h3>
-        <p>Retrait et ajout d'affixes, montée en rareté, auto-craft jusqu'au résultat visé.</p>
-      </div>
-      <div class="card">
-        <h3>Campagne</h3>
-        <p>Sept actes jusqu'au niveau 55, gardiens en deux phases.</p>
-      </div>
-      <div class="card">
-        <h3>Fin de jeu</h3>
-        <p>Terres errantes, cinq Cauchemars, Arbre des Terres, deux ligues.</p>
-      </div>
-      <div class="card">
-        <h3>Arène</h3>
-        <p>Des vagues sans fin, une vague record.</p>
-      </div>
-      <div class="card">
-        <h3>Clavier ou manette</h3>
-        <p>Visée au stick assistée, menus à la manette, Steam Deck.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -358,7 +311,7 @@
 
 <section id="communaute">
   <div class="wrap">
-    <h2>Commun<span class="accent">au</span>té</h2>
+    <h2>Communauté</h2>
     <div class="dl">
       <div class="box">
         <h3>Discord</h3>
@@ -381,14 +334,13 @@
 <section id="telecharger" class="alt">
   <div class="wrap">
     <h2>Télécharger</h2>
-    <p class="sub">Version 0.7.0, Windows 10/11 64 bits. Gratuit.</p>
+    <p class="sub">Version 0.7.0, Windows 10/11 64 bits.</p>
     <div class="dl">
       <div class="box">
         <h3>Ashfall.exe</h3>
-        <p class="dim">Environ 2 Go. Pas d'installateur, pas de compte : double-clic et ça se lance.</p>
+        <p class="dim" data-size="exe">2,07 Go (2 217 863 904 octets)</p>
         <div class="actions left">
           <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/Ashfall.exe" data-dl="exe">Télécharger Ashfall.exe</a>
-          <a class="btn ghost" href="https://github.com/berzerkk/ashfall-releases/releases">Toutes les versions</a>
         </div>
         <div class="meta">
           Mises à jour automatiques au lancement.
@@ -414,7 +366,6 @@
   <div class="wrap">
     <span class="brand">ASHFALL</span><span class="sep">·</span>
     <span>Version 0.7.0</span><span class="sep">·</span>
-    <a href="https://github.com/berzerkk/ashfall-releases/releases">Versions</a><span class="sep">·</span>
     <a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Journal des changements</a><span class="sep">·</span>
     <a href="wiki/index.html">Wiki</a><span class="sep">·</span>
     <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a>
