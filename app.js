@@ -99,6 +99,30 @@
     host.appendChild(frag);
   }
 
+  // ───────────────────────────── accueil : classes, nouveautés, compteurs ─────────────────────────────
+  var HOME = window.ASHFALL_HOME || { classes: [], fresh: [], counts: {} };
+  var cg = document.getElementById('class-grid');
+  if (cg) {
+    HOME.classes.forEach(function (c) {
+      var d = document.createElement('div');
+      d.className = 'class-card';
+      if (c.color) d.style.setProperty('--cc', c.color);
+      d.innerHTML = '<img src="' + esc(c.icon) + '" alt="" loading="lazy" width="88" height="88">' +
+        '<div><h3>' + esc(c.name) + '</h3><p>' + esc(c.desc) + '</p></div>';
+      cg.appendChild(d);
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-fresh]'), function (host) {
+    var fam = host.getAttribute('data-fresh');
+    icon_grid(host, HOME.fresh.filter(function (s) { return s.family === fam; }).map(function (s) {
+      return { name: s.name, icon: s.icon, html: '<strong>' + esc(s.name) + '</strong><br><br><span style="color:#b9c2d0">' + esc(s.desc) + '</span>' };
+    }));
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-count]'), function (b) {
+    var n = HOME.counts && HOME.counts[b.getAttribute('data-count')];
+    if (n) b.textContent = n;
+  });
+
   icon_grid(document.getElementById('show-skills'), SHOW.skills);
   icon_grid(document.getElementById('show-supports'), SHOW.supports);
   item_tiles(document.getElementById('show-items'), SHOW.items);
@@ -135,7 +159,12 @@
   }
 
   // ───────────────────────────── visionneuse ─────────────────────────────
-  var figs = Array.prototype.slice.call(document.querySelectorAll('#gallery figure img'));
+  var figs = Array.prototype.slice.call(document.querySelectorAll('#gallery figure img, #gallery-ui figure img, .shot-pair img'));
+  var full = function (f) { return f.getAttribute('data-full') || f.getAttribute('src'); };
+  var label = function (f) {
+    var t = f.parentNode.querySelector('figcaption');
+    return t && f.parentNode.tagName === 'FIGURE' && !f.parentNode.classList.contains('shot-pair') ? t.textContent : (f.alt || '');
+  };
   var lb = document.getElementById('lb');
   if (figs.length && lb) {
     var img = document.getElementById('lb-img');
@@ -144,13 +173,14 @@
 
     var show_at = function (n) {
       i = (n + figs.length) % figs.length;
-      img.src = figs[i].getAttribute('src');
+      img.src = figs[i].getAttribute('src');   // vignette tout de suite, puis la 4K
+      var hi = new Image();
+      var want = i;
+      hi.onload = function () { if (want === i && !lb.hidden) img.src = hi.src; };
+      hi.src = full(figs[i]);
       img.alt = figs[i].alt || '';
-      var t = figs[i].parentNode.querySelector('figcaption');
-      cap.textContent = (t ? t.textContent : '') + '   ' + (i + 1) + ' / ' + figs.length;
-      [figs[(i + 1) % figs.length], figs[(i - 1 + figs.length) % figs.length]].forEach(function (f) {
-        var p = new Image(); p.src = f.getAttribute('src');
-      });
+      cap.innerHTML = esc(label(figs[i])) + '<span class="lb-n">' + (i + 1) + ' / ' + figs.length + '</span>' +
+        '<a class="lb-4k" href="' + esc(full(figs[i])) + '" target="_blank" rel="noopener">Ouvrir en 4K</a>';
     };
     var open = function (n) { show_at(n); lb.hidden = false; document.body.style.overflow = 'hidden'; };
     var close = function () { lb.hidden = true; document.body.style.overflow = ''; img.src = ''; };

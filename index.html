@@ -3,46 +3,141 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ashfall — hack'n'slash fantasy</title>
-<meta name="description" content="Ashfall : hack'n'slash fantasy en développement. Huit classes, des sorts qu'on modifie par supports, une campagne qui se rejoue plus dure. Évaluation gratuite pour Windows.">
-<meta property="og:title" content="Ashfall — hack'n'slash fantasy">
-<meta property="og:description" content="Huit classes, 44 sorts, 52 supports. Une campagne qui se rejoue plus dure. Évaluation gratuite.">
-<meta property="og:image" content="media/hero.jpg">
+<title>Ashfall — hack'n'slash fantasy gratuit</title>
+<meta name="description" content="Ashfall : hack'n'slash fantasy gratuit pour Windows. Neuf classes, des sorts qu'on transforme avec des supports, des runes qui réagissent entre elles et une campagne qui se rejoue en Cauchemar.">
+<meta property="og:title" content="Ashfall — hack'n'slash fantasy gratuit">
+<meta property="og:description" content="Neuf classes, 77 compétences, 84 supports. Version 0.7.0 : le Graveur de Runes, gardes et malédictions.">
+<meta property="og:image" content="https://berzerkk.github.io/ashfall-site/media/og.jpg">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="media/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="media/shots/hero_2560.webp">
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <span class="brand">ASHFALL</span>
+    <a class="brand" href="#">ASHFALL</a>
     <nav>
-      <a href="#trailer">Bande-annonce</a>
-      <a href="#apercu">Aperçu</a>
+      <a href="#nouveautes">Nouveautés</a>
+      <a href="#classes">Classes</a>
       <a href="#galerie">Captures</a>
       <a href="#jeu">Le jeu</a>
+      <a href="#apercu">Aperçu</a>
       <a href="#roadmap">Feuille de route</a>
       <a href="#changelog">Mises à jour</a>
-      <a href="#telecharger">Télécharger</a>
       <a href="wiki/index.html">Wiki</a>
       <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a>
     </nav>
+    <a class="btn small" href="#telecharger">Télécharger</a>
   </div>
 </header>
 
 <div class="hero">
-  <img class="bg" src="media/shot_hub.jpg" alt="">
+  <picture>
+    <source media="(min-width: 2200px)" srcset="media/shots/hero.jpg">
+    <img class="bg" src="media/shots/hero_2560.webp" alt="">
+  </picture>
   <div class="veil"></div>
   <div class="inner wrap">
-    <div class="tag">Hack'n'slash fantasy</div>
+    <div class="tag">Hack'n'slash fantasy · gratuit</div>
     <h1>ASHFALL</h1>
+    <p class="lead">Neuf classes, des sorts qu'on transforme avec des supports, des runes qui réagissent entre elles, et une campagne qui se rejoue en Cauchemar.</p>
     <div class="actions">
       <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/Ashfall.exe" data-dl="exe">Télécharger pour Windows</a>
-      <a class="btn ghost" href="#trailer">Voir la bande-annonce</a>
+      <a class="btn ghost" href="#nouveautes">Nouveautés de la 0.7.0</a>
     </div>
+    <p class="note">Version 0.7.0 · Windows 10/11 · environ 2 Go · mises à jour automatiques</p>
+  </div>
+  <div class="stats wrap" id="stats">
+    <div><b data-count="classes">9</b><span>classes</span></div>
+    <div><b data-count="skills">77</b><span>compétences</span></div>
+    <div><b data-count="supports">84</b><span>supports</span></div>
+    <div><b data-count="zones">36</b><span>cartes de campagne</span></div>
   </div>
 </div>
+
+<section id="nouveautes" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Version 0.7.0</div>
+    <h2>Le Graveur de Runes, gardes et malédictions</h2>
+    <div class="split">
+      <div class="split-text">
+        <h3>Une neuvième classe : le Graveur de Runes</h3>
+        <p>Il grave au sol des runes de <span class="c-fire">feu</span>, de <span class="c-cold">froid</span>, de <span class="c-light">foudre</span> et d'<span class="c-ero">érosion</span>, une par lancer, dans l'ordre de ses quatre emplacements. Là où les glyphes se chevauchent, les éléments <strong>réagissent</strong> : Fracture thermique, Plasma, Supraconduction, Flamme noire, Nécrose glacée, Arc du vide.</p>
+        <p>Puis le <strong>Verbe de Rupture</strong> fait tout détoner d'un coup.</p>
+        <ul class="ticks">
+          <li>Arbre de classe de 12 nœuds autour de la Résonance</li>
+          <li>Six légendaires dédiés, dont le Lexique du Silence</li>
+          <li>Nouveaux talents majeurs de la Déesse du Savoir</li>
+        </ul>
+      </div>
+      <figure class="shot-pair">
+        <img src="media/shots/graveur_1280.webp" data-full="media/shots/graveur.jpg" alt="Le Graveur de Runes : quatre glyphes au sol" loading="lazy">
+        <img src="media/shots/graveur_rupture_1280.webp" data-full="media/shots/graveur_rupture.jpg" alt="Verbe de Rupture : toutes les runes détonent" loading="lazy">
+      </figure>
+    </div>
+    <div class="fresh">
+      <div class="fresh-card">
+        <h3>8 gardes</h3>
+        <p>Instantanées, lancées sans interrompre votre action : bouclier d'énergie, carapace de pierre, mur de boucliers, égides élémentaires…</p>
+        <div class="kx-row" data-fresh="guard"></div>
+      </div>
+      <div class="fresh-card">
+        <h3>7 malédictions</h3>
+        <p>Une seule par ennemi, la nouvelle remplace l'ancienne. Avec le support Aura Maudite, la malédiction devient une zone autour de vous.</p>
+        <div class="kx-row" data-fresh="curse"></div>
+      </div>
+      <div class="fresh-card">
+        <h3>Renforcements</h3>
+        <p>Huit secondes de puissance, chacun avec son effet : cercle de bataille, prix du sang, spore qui ronge, rappel des serviteurs.</p>
+        <div class="kx-row" data-fresh="empower"></div>
+      </div>
+    </div>
+    <p class="more">Aussi : le Porte-Peste repensé autour de l'érosion, des gardiens en deux phases, la manette et le Steam Deck, un écran de mort détaillé. <a href="#changelog">Tout le journal →</a></p>
+  </div>
+</section>
+
+<section id="classes">
+  <div class="wrap">
+    <h2>Neuf classes</h2>
+    <p class="sub">Une ressource et une mécanique propres à chacune, une couleur pour se reconnaître dans la mêlée.</p>
+    <div class="classes" id="class-grid"></div>
+  </div>
+</section>
+
+<section id="galerie" class="alt">
+  <div class="wrap">
+    <h2>Captures</h2>
+    <p class="sub">En jeu, en 3840 × 2160. Cliquez pour voir en plein écran.</p>
+    <div class="gallery" id="gallery">
+      <figure class="big"><img loading="lazy" src="media/shots/cendres_1280.webp" data-full="media/shots/cendres.jpg" alt="Météore du Pyromancien contre Ignar"><figcaption>Cendres — le Pyromancien face à Ignar, Salamandre ardente</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/catacombes_1280.webp" data-full="media/shots/catacombes.jpg" alt="Le Seigneur des Ossuaires"><figcaption>Catacombes de Morteval — le Seigneur des Ossuaires</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/domaine_1280.webp" data-full="media/shots/domaine.jpg" alt="Contagion et Faux de la Moisson"><figcaption>Domaine du Castel Sanguin — Contagion et Faux de la Moisson</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/hub_1280.webp" data-full="media/shots/hub.jpg" alt="Hautecrête, le refuge"><figcaption>Hautecrête, le refuge</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/fleche_1280.webp" data-full="media/shots/fleche.jpg" alt="Nova de givre"><figcaption>Le Reliquaire Suspendu — Nova de givre</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/cimetiere_1280.webp" data-full="media/shots/cimetiere.jpg" alt="L'armée d'os de l'Invocateur"><figcaption>Cimetière de Morteval — l'armée d'os de l'Invocateur</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/castel_1280.webp" data-full="media/shots/castel.jpg" alt="Arc électrique contre le Comte Sanguin"><figcaption>Le Castel Sanguin — Arc électrique contre le Comte</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/lisiere_1280.webp" data-full="media/shots/lisiere.jpg" alt="La Rôdeuse sur la plage de la Lisière"><figcaption>La Lisière — la Rôdeuse face aux diablotins</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/desert_1280.webp" data-full="media/shots/desert.jpg" alt="La Mande-Tempête contre le Roi des Os"><figcaption>Dunes Sèches — la Mande-Tempête contre le Roi des Os</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/cote_1280.webp" data-full="media/shots/cote.jpg" alt="Plage des Naufrageurs"><figcaption>Plage des Naufrageurs — flèches incendiaires</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/graveur_1280.webp" data-full="media/shots/graveur.jpg" alt="Les glyphes du Graveur de Runes"><figcaption>Marais de Brumevase — les glyphes du Graveur de Runes</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/graveur_rupture_1280.webp" data-full="media/shots/graveur_rupture.jpg" alt="Verbe de Rupture"><figcaption>Marais de Brumevase — le Verbe de Rupture fait tout détoner</figcaption></figure>
+    </div>
+    <h3 class="kicker">L'interface</h3>
+    <div class="gallery ui" id="gallery-ui">
+      <figure><img loading="lazy" src="media/shots/ui_inventaire_1280.webp" data-full="media/shots/ui_inventaire.jpg" alt="Inventaire et feuille de personnage"><figcaption>Inventaire et feuille de personnage</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/ui_classe_1280.webp" data-full="media/shots/ui_classe.jpg" alt="Onglet Classe du Graveur de Runes"><figcaption>Classe : runes et réactions du Graveur</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/ui_talents_1280.webp" data-full="media/shots/ui_talents.jpg" alt="Arbre de talents"><figcaption>Arbres de talents des dieux</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/ui_competences_1280.webp" data-full="media/shots/ui_competences.jpg" alt="Compétences et supports"><figcaption>Compétences, supports et auras</figcaption></figure>
+      <figure><img loading="lazy" src="media/shots/ui_carte_1280.webp" data-full="media/shots/ui_carte.jpg" alt="Table des cartes"><figcaption>La table des cartes</figcaption></figure>
+    </div>
+  </div>
+</section>
 
 <section id="trailer">
   <div class="wrap">
@@ -56,9 +151,50 @@
   </div>
 </section>
 
+<section id="jeu" class="alt">
+  <div class="wrap">
+    <h2>Le jeu</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Sorts et supports</h3>
+        <p>Un sort de base, puis des supports qui changent sa géométrie : plus de projectiles, chaîne, zone élargie, dégâts convertis. Les mauvais mariages se voient tout de suite.</p>
+      </div>
+      <div class="card">
+        <h3>Gardes et malédictions</h3>
+        <p>Des défenses instantanées à placer au bon moment, des malédictions qui ouvrent la voie au reste de la build.</p>
+      </div>
+      <div class="card">
+        <h3>Arbres des dieux</h3>
+        <p>Des points à chaque niveau, des arbres de dieux aux talents majeurs, des nœuds qui ne font pas la même chose, et le droit de se tromper : le respec est là.</p>
+      </div>
+      <div class="card">
+        <h3>Butin</h3>
+        <p>Raretés, affixes, objets légendaires avec un effet qui ne sort d'aucun barème. Un filtre de butin complet, avec aperçu réel au sol.</p>
+      </div>
+      <div class="card">
+        <h3>Forge</h3>
+        <p>Recyclage, retrait et ajout d'affixes, montée en rareté. Et l'auto-craft : visez « Force T3 ou mieux », la forge enchaîne les vrais essais jusqu'au résultat.</p>
+      </div>
+      <div class="card">
+        <h3>Campagne et Cauchemars</h3>
+        <p>Une campagne jusqu'au niveau 55, des gardiens à deux phases, puis les Cauchemars et les Terres errantes, avec des modificateurs tirés à l'ouverture de la carte.</p>
+      </div>
+      <div class="card">
+        <h3>Arène sans fin</h3>
+        <p>Des vagues, des élites, une vague record qui reste affichée. C'est là qu'on vérifie si la build tient.</p>
+      </div>
+      <div class="card">
+        <h3>Clavier, souris ou manette</h3>
+        <p>Visée au stick assistée, curseur virtuel dans les menus, réglages adaptés au Steam Deck. Télégraphes au sol et écran de mort détaillé : ce qui tue, on le voit venir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="apercu">
   <div class="wrap">
     <h2>Aperçu</h2>
+    <p class="sub">Les vraies infobulles du jeu : survolez une icône.</p>
     <h3 class="kicker">Sorts</h3>
     <div class="kx-row" id="show-skills"></div>
     <h3 class="kicker">Supports</h3>
@@ -70,74 +206,25 @@
   </div>
 </section>
 
-<section id="galerie">
-  <div class="wrap">
-    <h2>Captures</h2>
-    <div class="gallery" id="gallery">
-      <figure><img loading="lazy" src="media/shot_hub.jpg" alt="L'île de Hautecrête"><figcaption>L'île de Hautecrête — le hub</figcaption></figure>
-      <figure><img loading="lazy" src="media/shot_forest.jpg" alt="La forêt de Verdeclat"><figcaption>La forêt de Verdeclat</figcaption></figure>
-      <figure><img loading="lazy" src="media/shot_desert.jpg" alt="Le désert des Ossements"><figcaption>Le désert des Ossements</figcaption></figure>
-      <figure><img loading="lazy" src="media/shot_volcano.jpg" alt="La faille Écarlate"><figcaption>La faille Écarlate</figcaption></figure>
-      <figure><img loading="lazy" src="media/shot_cemetery.jpg" alt="Le cimetière de Morteval sous la pluie"><figcaption>Le cimetière de Morteval, sous la pluie</figcaption></figure>
-      <figure><img loading="lazy" src="media/shot_catacombs.jpg" alt="Les catacombes de Morteval"><figcaption>Les catacombes de Morteval</figcaption></figure>
-      <figure><img loading="lazy" src="media/ui_inventory.jpg" alt="Inventaire et personnage"><figcaption>Inventaire et feuille de personnage</figcaption></figure>
-      <figure><img loading="lazy" src="media/ui_talents.jpg" alt="Arbre de talents"><figcaption>Arbre de talents</figcaption></figure>
-      <figure><img loading="lazy" src="media/ui_skills.jpg" alt="Compétences et supports"><figcaption>Compétences et supports</figcaption></figure>
-      <figure><img loading="lazy" src="media/ui_map.jpg" alt="La carte"><figcaption>La carte : actes, paliers, affixes</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<section id="jeu">
-  <div class="wrap">
-    <h2>Le jeu</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Huit classes</h3>
-        <p>Gardien de braise, arcaniste, rôdeuse, invocateur, pyromancien, tisse-givre, mande-tempête, porte-peste. Une ressource par classe, une mécanique par classe, et une couleur pour se reconnaître dans la mêlée.</p>
-      </div>
-      <div class="card">
-        <h3>Sorts et supports</h3>
-        <p>Un sort de base, puis des supports qui changent sa géométrie : plus de projectiles, chaîne, zone élargie, dégâts convertis. Les mauvais mariages se voient tout de suite.</p>
-      </div>
-      <div class="card">
-        <h3>Arbre de talents</h3>
-        <p>Des points à chaque niveau, des nœuds qui ne font pas la même chose, et le droit de se tromper : le respec est là.</p>
-      </div>
-      <div class="card">
-        <h3>Butin</h3>
-        <p>Raretés, affixes, objets légendaires avec un effet qui ne sort d'aucun barème. Un filtre de butin complet, avec aperçu réel au sol, pour ne voir que ce qui compte.</p>
-      </div>
-      <div class="card">
-        <h3>Forge</h3>
-        <p>Recyclage, retrait et ajout d'affixes, montée en rareté. Et l'auto-craft : visez « Force T3 ou mieux », la forge enchaîne les vrais essais jusqu'au résultat.</p>
-      </div>
-      <div class="card">
-        <h3>Cauchemars</h3>
-        <p>Un donjon bouclé se relance avec des modificateurs tirés au moment d'ouvrir la carte. Le même couloir, deux fois, ne se joue pas pareil.</p>
-      </div>
-      <div class="card">
-        <h3>Arène sans fin</h3>
-        <p>Des vagues, des élites, une vague record qui reste affichée. C'est là qu'on va tester si la build tient.</p>
-      </div>
-      <div class="card">
-        <h3>Lisibilité</h3>
-        <p>Télégraphes au sol par type d'attaque, dégâts abrégés, minimap qui suit vraiment les murs. Ce qui tue, on le voit venir.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="roadmap">
+<section id="roadmap" class="alt">
   <div class="wrap">
     <h2>Feuille de route</h2>
     <div class="roadmap">
 
       <div class="rm-col">
+        <h3><span class="chip done">livré en 0.7</span></h3>
+        <ul>
+          <li><strong>Graveur de Runes</strong> — neuvième classe, runes et réactions élémentaires.</li>
+          <li><strong>Gardes, malédictions, renforcements</strong> — dix-neuf nouvelles compétences.</li>
+          <li><strong>Porte-Peste repensé</strong> — érosion, Contagion, Moisson.</li>
+          <li><strong>Manette et Steam Deck</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="rm-col">
         <h3><span class="chip now">en cours</span></h3>
         <ul>
-          <li><strong>Nouvelles classes</strong> — une ressource et une mécanique qui ne recopient pas les huit existantes.</li>
-          <li><strong>Campagne refaite</strong> — après la Lisière, le cimetière et les catacombes : la suite de la forêt de Verdeclat, carte par carte.</li>
+          <li><strong>Campagne refaite</strong> — la suite de la forêt de Verdeclat, carte par carte.</li>
           <li><strong>Nouveaux actes</strong> — la Flèche Cendrée, les Fonds Engloutis et le Castel Sanguin à intégrer à la campagne (jusqu'au niveau 55).</li>
           <li><strong>Améliorations visuelles</strong> — sols, eau, effets de sorts et d'impacts.</li>
           <li><strong>Interface et lisibilité</strong> — fiches d'objets et de sorts unifiées, infos de combat plus nettes.</li>
@@ -147,12 +234,10 @@
       <div class="rm-col">
         <h3><span class="chip next">prévu</span></h3>
         <ul>
-          <li><strong>Nouveaux sorts</strong> — de quoi remplir les trous de chaque classe, élément par élément.</li>
+          <li><strong>Nouvelles classes</strong> — une ressource et une mécanique qui ne recopient pas les neuf existantes.</li>
           <li><strong>Nouveaux supports</strong> — plus de façons de casser un sort, y compris des supports qui se contredisent.</li>
-          <li><strong>Auras et arbre de talents</strong> — arbre plus profond, auras à réserver et à faire évoluer.</li>
           <li><strong>Plus de légendaires</strong> — des objets qui créent une build au lieu de l'arrondir.</li>
-          <li><strong>Craft retravaillé</strong> — après l'auto-craft : verrouillage d'affixe et issues encore plus claires.</li>
-          <li><strong>Mécaniques de combat</strong> — de nouvelles façons de prendre un coup et d'en rendre.</li>
+          <li><strong>Craft retravaillé</strong> — verrouillage d'affixe et issues encore plus claires.</li>
         </ul>
       </div>
 
@@ -168,23 +253,31 @@
   </div>
 </section>
 
-<section id="communaute">
+<section id="changelog">
+  <div class="wrap">
+    <h2>Mises à jour</h2>
+    <p class="sub">Le jeu se met à jour tout seul au lancement. <a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Le journal complet</a></p>
+    <div class="log" id="log"></div>
+  </div>
+</section>
+
+<section id="communaute" class="alt">
   <div class="wrap">
     <h2>Commun<span class="accent">au</span>té</h2>
     <p class="sub">Le Discord d’Ashfall : entraide, rapports de bug, suggestions, builds et annonces de version.</p>
     <div class="dl">
       <div class="box">
-        <h3 style="margin-top:0;color:var(--gold2)">Le salon d’entraide</h3>
-        <p style="color:var(--dim);margin-top:0">
+        <h3>Le salon d’entraide</h3>
+        <p class="dim">
           Une question sur une classe, un affixe ou un palier ? Pose-la, la communauté répond.
           Les bugs se signalent avec le modèle fourni, les idées se votent aux réactions.
         </p>
-        <div class="actions" style="justify-content:flex-start;margin-top:18px">
+        <div class="actions left">
           <a class="btn" href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Rejoindre le Discord</a>
         </div>
       </div>
       <div class="box">
-        <h3 style="margin-top:0;color:var(--gold2)">Au programme</h3>
+        <h3>Au programme</h3>
         <ul>
           <li>Entraide et builds partagés</li>
           <li>Rapports de bug et suggestions votées</li>
@@ -196,42 +289,35 @@
   </div>
 </section>
 
-<section id="changelog">
-  <div class="wrap">
-    <h2>Mises à jour</h2>
-    <p class="sub"><a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Le journal sur GitHub</a></p>
-    <div class="log" id="log"></div>
-  </div>
-</section>
-
 <section id="telecharger">
   <div class="wrap">
     <h2>Télécharger</h2>
     <p class="sub">Version 0.7.0, Windows 10/11 64 bits. Gratuit.</p>
     <div class="dl">
       <div class="box">
-        <h3 style="margin-top:0;color:var(--gold2)">Ashfall.exe</h3>
-        <p style="color:var(--dim);margin-top:0">
+        <h3>Ashfall.exe</h3>
+        <p class="dim">
           Un fichier d'environ <strong>2 Go</strong>. Double-clic, ça se lance : pas d'installateur, pas de launcher,
           pas de compte.
         </p>
-        <div class="actions" style="justify-content:flex-start;margin-top:18px">
+        <div class="actions left">
           <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/Ashfall.exe" data-dl="exe">Télécharger Ashfall.exe</a>
           <a class="btn ghost" href="https://github.com/berzerkk/ashfall-releases/releases">Toutes les versions</a>
         </div>
         <div class="meta">
           Le jeu se met à jour tout seul au lancement : inutile de retélécharger l'exécutable.
+          Si Windows affiche « Windows a protégé votre ordinateur », cliquez sur <em>Informations complémentaires</em> puis <em>Exécuter quand même</em>.
           Sauvegardes dans <code>%APPDATA%\Godot\app_userdata\Ashfall</code>.
           Une question ? Le <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a> est là.
         </div>
       </div>
       <div class="box">
-        <h3 style="margin-top:0;color:var(--gold2)">Configuration</h3>
+        <h3>Configuration</h3>
         <ul>
           <li>Windows 10/11 64 bits</li>
           <li>Carte graphique Vulkan (GTX 900 ou plus récente)</li>
           <li>8 Go de RAM, 6 Go de disque (mises à jour comprises)</li>
-          <li>Clavier et souris</li>
+          <li>Clavier et souris, ou manette</li>
           <li>Français uniquement pour l'instant</li>
         </ul>
       </div>
@@ -241,10 +327,11 @@
 
 <footer>
   <div class="wrap">
-    <span>Ashfall</span><span class="sep">·</span>
+    <span class="brand">ASHFALL</span><span class="sep">·</span>
     <span>Version 0.7.0</span><span class="sep">·</span>
     <a href="https://github.com/berzerkk/ashfall-releases/releases">Versions</a><span class="sep">·</span>
     <a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Journal des changements</a><span class="sep">·</span>
+    <a href="wiki/index.html">Wiki</a><span class="sep">·</span>
     <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a>
   </div>
 </footer>
@@ -262,6 +349,7 @@
 <script src="data/showcase.js"></script>
 <script src="data/tree.js"></script>
 <script src="data/changelog.js"></script>
+<script src="data/home.js"></script>
 <script src="app.js"></script>
 <script src="talent-tree.js"></script>
 </body>
