@@ -227,6 +227,18 @@
       .replace(/`(.+?)`/g, '<code>$1</code>');
   }
 
+  // ───────────────────────────── accueil : actualités ─────────────────────────────
+  var NEWS = window.ASHFALL_NEWS || [];
+  var nh = document.getElementById('news-home');
+  if (nh) {
+    nh.innerHTML = NEWS.map(function (n, i) {
+      return '<a class="news-card' + (i === 0 ? ' lead' : '') + '" href="news/' + esc(n.id) + '.html">' +
+        '<div class="nc-img">' + (n.cover ? '<img src="media/shots/' + esc(n.cover) + (i === 0 ? '.jpg' : '_1280.webp') + '" alt="" loading="lazy">' : '') +
+        '<span class="vtag">' + esc(n.ver) + '</span></div>' +
+        '<div class="nc-body"><div class="nc-date">' + esc(n.date) + '</div><h3>' + esc(n.title) + '</h3><p>' + esc(n.summary) + '</p></div></a>';
+    }).join('');
+  }
+
   // ───────────────────────────── journal ─────────────────────────────
   var log = window.ASHFALL_LOG || [];
   var host = document.getElementById('log');
@@ -248,7 +260,7 @@
   }
 
   // ───────────────────────────── visionneuse ─────────────────────────────
-  var figs = Array.prototype.slice.call(document.querySelectorAll('#gallery figure img, #gallery-ui figure img, .shot-pair img, .meca-shots img'));
+  var figs = Array.prototype.slice.call(document.querySelectorAll('#gallery figure img, #gallery-ui figure img, .shot-pair img, .meca-shots img, .ps-img img'));
   var full = function (f) { return f.getAttribute('data-full') || f.getAttribute('src'); };
   var label = function (f) {
     var t = f.parentNode.querySelector('figcaption');
