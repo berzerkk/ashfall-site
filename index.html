@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-root="" data-page="index.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="media/favicon.svg" type="image/svg+xml">
+<!--hreflang--><link rel="alternate" hreflang="fr" href="https://berzerkk.github.io/ashfall-site/index.html"><link rel="alternate" hreflang="en" href="https://berzerkk.github.io/ashfall-site/en/index.html"><link rel="alternate" hreflang="x-default" href="https://berzerkk.github.io/ashfall-site/en/index.html"><!--/hreflang-->
+<script src="lang.js"></script>
 </head>
 <body>
 
@@ -32,6 +34,7 @@
       <a href="wiki/index.html">Wiki</a>
       <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a>
     </nav>
+    <div class="lang-menu" id="lang-menu"></div>
     <a class="btn small" href="#telecharger">Télécharger</a>
   </div>
 </header>
@@ -352,6 +355,7 @@
 
 <div class="kx-tip" id="kx-tip" hidden></div>
 
+<script src="data/i18n.js"></script>
 <script src="data/showcase.js"></script>
 <script src="data/tree.js"></script>
 <script src="data/changelog.js"></script>

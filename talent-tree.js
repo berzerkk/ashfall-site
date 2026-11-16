@@ -4,6 +4,12 @@
 (function () {
   'use strict';
 
+  // Textes selon la langue de la page (<html lang>) : data/i18n.js (tools/site_i18n/<langue>.json, clé ui.tree)
+  var UI_ALL = window.ASHFALL_UI || {};
+  var L = (UI_ALL[document.documentElement.lang] || UI_ALL.fr || {}).tree || {};
+  function F(s, o) { return String(s || '').replace(/\{(\w+)\}/g, function (_m, k) { return o[k]; }); }
+  var ROOT = document.documentElement.getAttribute('data-root') || '';
+
   var CW = 176, RH = 118, TOP = 46, SZ_S = 60, SZ_M = 76;
   // même règle que Talents.col_threshold : au-delà de la liste, +3 points par colonne
   function colNeed(thr, c) { return c < thr.length ? (thr[c] || 0) : (thr[thr.length - 1] || 0) + 3 * (c - thr.length + 1); }
@@ -28,19 +34,19 @@
     }
     function nodeTip(n, alloc, total, thr, labels) {
       var rank = alloc[n.id] || 0;
-      var kind = { small: 'Petit talent', medium: 'Talent moyen', keystone: 'Talent majeur' }[n.kind] || 'Talent';
+      var kind = { small: L.small, medium: L.medium, keystone: L.keystone }[n.kind] || L.talent;
       var h = '<span style="color:#e8b04a"><strong>' + esc(n.name) + '</strong></span><br>';
-      h += '<span style="color:#7d8796">' + esc(kind) + ' · ' + n.max + ' rang(s)</span><br>';
+      h += '<span style="color:#7d8796">' + esc(kind) + ' · ' + n.max + L.ranks + '</span><br>';
       if (n.desc) h += esc(n.desc) + '<br>';
       if (n.stats && Object.keys(n.stats).length) {
-        h += '<br><span style="color:#7d8796">Par rang :</span><br>' + statLines(labels, n.stats, 1, '#e2e8f0');
+        h += '<br><span style="color:#7d8796">' + L.per + '</span><br>' + statLines(labels, n.stats, 1, '#e2e8f0');
         if (rank > 0 && n.max > 1) {
-          h += '<span style="color:#7d8796">Total rang ' + rank + '/' + n.max + ' :</span><br>' + statLines(labels, n.stats, rank, '#4fc3b0');
+          h += '<span style="color:#7d8796">' + F(L.total, { r: rank, m: n.max }) + '</span><br>' + statLines(labels, n.stats, rank, '#4fc3b0');
         }
       }
       var need = colNeed(thr, n.col);
       if (need > 0 && total < need) {
-        h += '<span style="color:#e85555">Requiert ' + need + ' pts (' + total + '/' + need + ')</span><br>';
+        h += '<span style="color:#e85555">' + F(L.need, { n: need, t: total }) + '</span><br>';
       }
       return h;
     }
@@ -69,13 +75,13 @@
       var head = document.createElement('div');
       head.className = 'tal-head';
       head.innerHTML = '<span class="tal-name" style="color:' + esc(treeCol) + '">' + esc(String(tree.name).toUpperCase())
-        + '</span>' + (opts.hidePoints ? '' : '<span class="tal-pts">' + total + ' points investis</span>');
+        + '</span>' + (opts.hidePoints ? '' : '<span class="tal-pts">' + F(L.spent, { n: total }) + '</span>');
       panel.appendChild(head);
 
       if (tree.cores && tree.cores.length) {
         var coreWrap = document.createElement('div');
         coreWrap.className = 'tal-cores';
-        coreWrap.innerHTML = '<div class="tal-sub">TALENTS MAJEURS</div>';
+        coreWrap.innerHTML = '<div class="tal-sub">' + L.cores + '</div>';
         var row = document.createElement('div');
         row.className = 'tal-core-row';
         tree.cores.forEach(function (tier) {
@@ -88,14 +94,14 @@
           b.className = 'tal-core' + (def ? ' on' : '') + (unlocked ? '' : ' locked');
           b.style.setProperty('--tc', treeCol);
           b.innerHTML = def
-            ? '<span class="cn">' + esc(def.name) + '</span><span class="cs">✓ ACTIF</span>'
+            ? '<span class="cn">' + esc(def.name) + '</span><span class="cs">' + L.active + '</span>'
             : '<span class="plus">+</span>';
-          var tip = '<strong>Talent Majeur — Palier ' + tier.tier + '</strong><br>';
+          var tip = '<strong>' + F(L.coreTier, { n: tier.tier }) + '</strong><br>';
           if (def) tip += '<strong>' + esc(def.name) + '</strong><br>' + esc(def.desc || '');
-          else if (!unlocked) tip += '<span style="color:#e5534b">Nécessite ' + (tier.need || 10) + " points dans l'arbre</span>";
-          else tip += 'Aucun choix fait';
+          else if (!unlocked) tip += '<span style="color:#e5534b">' + F(L.needTree, { n: tier.need || 10 }) + '</span>';
+          else tip += L.none;
           if (!def && tier.choices) {
-            tip += '<br><br><span style="color:#7d8796">Choix possibles :</span>';
+            tip += '<br><br><span style="color:#7d8796">' + L.choices + '</span>';
             tier.choices.forEach(function (c) { tip += '<br>· <strong>' + esc(c.name) + '</strong> — ' + esc(c.desc || ''); });
           }
           bind(b, tip);
@@ -123,7 +129,7 @@
         hl.className = 'tal-hl' + (openC ? ' open' : '');
         hl.style.left = (c * CW) + 'px';
         hl.style.width = CW + 'px';
-        hl.textContent = need > 0 ? need + ' PTS' : 'DÉPART';
+        hl.textContent = need > 0 ? F(L.pts, { n: need }) : L.start;
         if (!openC) hl.textContent += '  (' + total + '/' + need + ')';
         canvas.appendChild(hl);
       }
@@ -174,7 +180,7 @@
           // icône générée du nœud (mêmes images qu'en jeu), grisée tant que le nœud n'est pas pris
           var img = document.createElement('img');
           img.className = 'tal-ico' + (rank > 0 ? '' : ' dim');
-          img.src = n.icon; img.alt = ''; img.loading = 'lazy';
+          img.src = ROOT + n.icon; img.alt = ''; img.loading = 'lazy';
           el.appendChild(img);
         }
         var badge = document.createElement('span');

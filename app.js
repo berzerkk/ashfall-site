@@ -2,6 +2,11 @@
 (function () {
   'use strict';
 
+  // Langue de la page (<html lang>) et préfixe vers la racine du site (pages anglaises : data-root="../")
+  var UI_ALL = window.ASHFALL_UI || {};
+  var UI = UI_ALL[document.documentElement.lang] || UI_ALL.fr || {};
+  var ROOT = document.documentElement.getAttribute('data-root') || '';
+
   var esc = function (s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
@@ -55,7 +60,7 @@
       b.className = 'kx-icon';
       b.setAttribute('aria-label', e.name);
       var img = document.createElement('img');
-      img.src = e.icon; img.alt = e.name; img.width = 64; img.height = 64; img.loading = 'lazy';
+      img.src = ROOT + e.icon; img.alt = e.name; img.width = 64; img.height = 64; img.loading = 'lazy';
       b.appendChild(img);
       bind(b, e.html);
       frag.appendChild(b);
@@ -87,7 +92,7 @@
       b.className = 'kx-tile r-' + e.rarity;
       if (e.icon) {
         var img = document.createElement('img');
-        img.src = e.icon; img.alt = e.name; img.loading = 'lazy';
+        img.src = ROOT + e.icon; img.alt = e.name; img.loading = 'lazy';
         b.appendChild(img);
       }
       var nm = document.createElement('span');
@@ -98,6 +103,42 @@
     });
     host.appendChild(frag);
   }
+
+  // ───────────────────────────── langue : sélecteur de l'en-tête (lang.js) ─────────────────────────────
+  (function () {
+    var host = document.getElementById('lang-menu');
+    var LS = window.ASHFALL_LANGS, url = window.ASHFALL_LANG_URL;
+    if (!host || !LS || !url) return;
+    var cur = document.documentElement.lang;
+    var globe = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
+      '<path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.6 3.9 9.2s-1.3 6.6-3.9 9.2M12 2.8C9.4 5.4 8.1 8.4 8.1 12s1.3 6.6 3.9 9.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'lang-btn';
+    btn.setAttribute('aria-haspopup', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', UI.langMenu || 'Langue');
+    btn.innerHTML = globe + '<span>' + esc(cur.toUpperCase()) + '</span>';
+    var list = document.createElement('div');
+    list.className = 'lang-list';
+    list.hidden = true;
+    LS.langs.forEach(function (l) {
+      var a = document.createElement('a');
+      a.href = url(l.code) + '?lang=keep' + location.hash;
+      a.hreflang = l.code;
+      a.lang = l.code;
+      a.className = l.code === cur ? 'on' : '';
+      a.innerHTML = '<b>' + esc(l.code.toUpperCase()) + '</b>' + esc(l.name);
+      a.addEventListener('click', function () { try { localStorage.setItem('ashfall-lang', l.code); } catch (e) {} });
+      list.appendChild(a);
+    });
+    var toggle = function (open) { list.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+    btn.addEventListener('click', function (e) { e.stopPropagation(); toggle(list.hidden); });
+    document.addEventListener('click', function () { toggle(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggle(false); });
+    host.appendChild(btn);
+    host.appendChild(list);
+  })();
 
   // ───────────────────────────── héros : braises ─────────────────────────────
   (function () {
@@ -161,13 +202,13 @@
 
   // Téléchargement : lien et taille exacte lus dans le manifeste de mise à jour (latest.json)
   if (window.fetch && location.protocol !== 'file:') {
-    fetch('latest.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (m) {
+    fetch(ROOT + 'latest.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (m) {
       var exe = m && m.files && m.files['Ashfall.exe'];
       if (!exe) return;
       Array.prototype.forEach.call(document.querySelectorAll('[data-dl="exe"]'), function (a) { a.href = exe.url; });
-      var go = (exe.size / 1073741824).toFixed(2).replace('.', ',');
+      var go = (exe.size / 1073741824).toLocaleString(document.documentElement.lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       var oct = String(exe.size).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f');
-      Array.prototype.forEach.call(document.querySelectorAll('[data-size="exe"]'), function (p) { p.textContent = go + ' Go (' + oct + ' octets)'; });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-size="exe"]'), function (p) { p.textContent = String(UI.size || '{gb} Go').replace('{gb}', go).replace('{bytes}', oct); });
     }).catch(function () {});
   }
 
@@ -180,7 +221,7 @@
       b.type = 'button';
       b.className = 'class-ico';
       if (c.color) b.style.setProperty('--cc', c.color);
-      b.innerHTML = '<img src="' + esc(c.icon) + '" alt="" loading="lazy" width="104" height="104"><span>' + esc(c.name) + '</span>';
+      b.innerHTML = '<img src="' + esc(ROOT + c.icon) + '" alt="" loading="lazy" width="104" height="104"><span>' + esc(c.name) + '</span>';
       var col = c.color || '#e8b04a';
       bind(b, '<strong style="color:' + esc(col) + '">' + esc(c.name) + '</strong>' +
         (c.role ? '   <span style="color:#7d8796">' + esc(c.role) + '</span>' : '') +
@@ -233,7 +274,7 @@
   if (nh) {
     nh.innerHTML = NEWS.map(function (n, i) {
       return '<a class="news-card' + (i === 0 ? ' lead' : '') + '" href="news/' + esc(n.id) + '.html">' +
-        '<div class="nc-img">' + (n.cover ? '<img src="media/shots/' + esc(n.cover) + (i === 0 ? '.jpg' : '_1280.webp') + '" alt="" loading="lazy">' : '') +
+        '<div class="nc-img">' + (n.cover ? '<img src="' + ROOT + 'media/shots/' + esc(n.cover) + (i === 0 ? '.jpg' : '_1280.webp') + '" alt="" loading="lazy">' : '') +
         '<span class="vtag">' + esc(n.ver) + '</span></div>' +
         '<div class="nc-body"><div class="nc-date">' + esc(n.date) + '</div><h3>' + esc(n.title) + '</h3><p>' + esc(n.summary) + '</p></div></a>';
     }).join('');

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" data-root="../" data-page="index.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ashfall — free fantasy hack'n'slash</title>
+<meta name="description" content="Ashfall: a free fantasy hack'n'slash for Windows. Nine classes, spells reshaped by supports, two leagues and a campaign you replay in Nightmare.">
+<meta property="og:title" content="Ashfall — free fantasy hack'n'slash">
+<meta property="og:description" content="Version 0.8.0: slashes and thrusts with their shadows, channelled beams, an auction house, the Ink league and the game in English.">
+<meta property="og:image" content="https://berzerkk.github.io/ashfall-site/media/og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" href="../media/favicon.svg" type="image/svg+xml">
+<!--hreflang--><link rel="alternate" hreflang="fr" href="https://berzerkk.github.io/ashfall-site/index.html"><link rel="alternate" hreflang="en" href="https://berzerkk.github.io/ashfall-site/en/index.html"><link rel="alternate" hreflang="x-default" href="https://berzerkk.github.io/ashfall-site/en/index.html"><!--/hreflang-->
+<script src="../lang.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">ASHFALL</a>
+    <nav>
+      <a href="#actus">News</a>
+      <a href="#classes">Classes</a>
+      <a href="#mecaniques">Mechanics</a>
+      <a href="#galerie">Screenshots</a>
+      <a href="#apercu">Preview</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#changelog">Updates</a>
+      <a href="../wiki/index.html">Wiki</a>
+      <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a>
+    </nav>
+    <div class="lang-menu" id="lang-menu"></div>
+    <a class="btn small" href="#telecharger">Download</a>
+  </div>
+</header>
+
+<div class="hero">
+  <canvas class="embers" id="embers" aria-hidden="true"></canvas>
+  <div class="veil"></div>
+  <div class="inner wrap">
+    <h1>ASHFALL</h1>
+    <div class="version">Version 0.8.0</div>
+    <div class="actions">
+      <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.8.0/Ashfall.exe" data-dl="exe">Download for Windows</a>
+      <a class="btn ghost" href="news/0-8-0.html">What's new in 0.8.0</a>
+    </div>
+  </div>
+  <div class="stats wrap" id="stats">
+    <div><b data-count="classes">9</b><span>classes</span></div>
+    <div><b data-count="skills">88</b><span>skills</span></div>
+    <div><b data-count="supports">96</b><span>supports</span></div>
+    <div><b data-count="zones">36</b><span>campaign maps</span></div>
+  </div>
+</div>
+
+<section id="actus" class="alt">
+  <div class="wrap">
+    <div class="news-headline"><h2>News</h2><a class="more-link" href="news/index.html">All news →</a></div>
+    <div class="news-grid home" id="news-home"></div>
+  </div>
+</section>
+
+<section id="classes">
+  <div class="wrap">
+    <h2>Classes</h2>
+    <div class="class-icons" id="class-grid"></div>
+  </div>
+</section>
+
+<section id="mecaniques" class="alt">
+  <div class="wrap">
+    <h2>Mechanics</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="runes" role="tab">Runes and glyphs</button>
+      <button class="tab" data-tab="espace" role="tab">Space exploration</button>
+      <button class="tab" data-tab="glitch" role="tab">Glitched rifts</button>
+      <button class="tab" data-tab="terres" role="tab">Wandering Lands</button>
+    </div>
+
+    <div class="tab-panel on" data-panel="runes">
+      <div class="meca">
+        <div class="meca-text">
+          <p>Runic Carving carves the runes of your four slots into the ground, one per cast: fire, cold, lightning, erosion.</p>
+          <p>Two overlapping glyphs of different elements <strong>react</strong>:</p>
+          <ul class="ticks">
+            <li><span class="c-fire">Fire</span> + <span class="c-cold">cold</span>: Thermal Fracture</li>
+            <li><span class="c-fire">Fire</span> + <span class="c-light">lightning</span>: Plasma</li>
+            <li><span class="c-cold">Cold</span> + <span class="c-light">lightning</span>: Superconduction</li>
+            <li><span class="c-fire">Fire</span> + <span class="c-ero">erosion</span>: Black Flame</li>
+            <li><span class="c-cold">Cold</span> + <span class="c-ero">erosion</span>: Frozen Necrosis</li>
+            <li><span class="c-light">Lightning</span> + <span class="c-ero">erosion</span>: Void Arc</li>
+          </ul>
+          <p>Word of Rupture detonates everything: every pair reacts, with no cooldown.</p>
+        </div>
+        <figure class="meca-shots">
+          <img src="../media/shots/graveur_1280.webp" data-full="../media/shots/graveur.jpg" alt="Four glyphs on the ground" loading="lazy">
+          <img src="../media/shots/ui_classe_1280.webp" data-full="../media/shots/ui_classe.jpg" alt="Class tab: rune slots and reactions" loading="lazy">
+        </figure>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="espace" hidden>
+      <div class="meca">
+        <div class="meca-text">
+          <p>A black hole can open on a map (in the campaign from the 4th zone, and in the Wandering Lands). It spits out aliens until the rift is empty, then implodes and drops all the loot.</p>
+          <ul class="ticks">
+            <li>Every invasion you close yields <strong>energy cells</strong>.</li>
+            <li>The <strong>astronaut</strong> settles at the refuge after the first one.</li>
+            <li><strong>Expedition</strong>: one cell per jump, asteroids that empower aliens and loot, encounters with choices, and a planet to conquer at the end.</li>
+            <li><strong>Solar system</strong>: three orbits for conquered planets, permanent bonuses, alignments.</li>
+            <li><strong>Black star</strong>: three fragments open the map of the Star Devourer and its exclusive legendaries.</li>
+          </ul>
+        </div>
+        <figure class="meca-shots">
+          <img src="../media/shots/espace_expedition_1280.webp" data-full="../media/shots/espace_expedition.jpg" alt="Expedition map" loading="lazy">
+          <img src="../media/shots/espace_solaire_1280.webp" data-full="../media/shots/espace_solaire.jpg" alt="Solar system" loading="lazy">
+        </figure>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="glitch" hidden>
+      <div class="meca">
+        <div class="meca-text">
+          <p>A glitched rift can appear on a map (in the campaign from the 3rd zone, and in the Wandering Lands). Step inside: the map un-renders itself and fills with bugs to fix.</p>
+          <ul class="ticks">
+            <li><strong>Glitched</strong>: the basic rift.</li>
+            <li><strong>Critical</strong>: much stronger bugs, a guaranteed glitched item.</li>
+            <li><strong>Volatile</strong>: 70 seconds.</li>
+            <li><strong>Recursive</strong>: four depths, then the Corrupted Core.</li>
+          </ul>
+          <p><strong>Glitched items</strong> carry an exclusive affix (Duplication, Null Pointer, Infinite Loop…). The Core's legendaries grow stronger with every glitched item you wear.</p>
+        </div>
+        <figure class="meca-shots">
+          <img src="../media/shots/glitch_monde_1280.webp" data-full="../media/shots/glitch_monde.jpg" alt="Inside a glitched rift" loading="lazy">
+          <img src="../media/shots/glitch_faille_1280.webp" data-full="../media/shots/glitch_faille.jpg" alt="A recursive rift on the beach" loading="lazy">
+          <img src="../media/shots/labo_1280.webp" data-full="../media/shots/labo.jpg" alt="The Glitch Laboratory" loading="lazy">
+        </figure>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="terres" hidden>
+      <div class="meca">
+        <div class="meca-text">
+          <p>Finishing the first four acts opens the Wandering Lands: five randomly drawn maps, five Nightmares from level 60 to level 100.</p>
+          <ul class="ticks">
+            <li>Affixes rolled when each map opens.</li>
+            <li>Six lives per map. A map you leave stays open, and the refuge's RETURN portal takes you back.</li>
+            <li>The <strong>Tree of the Lands</strong> fills up with conquered lands: density, loot, leagues.</li>
+            <li>Respawn checkpoints at one third, two thirds and before the guardian.</li>
+          </ul>
+        </div>
+        <figure class="meca-shots">
+          <img src="../media/shots/ui_carte_1280.webp" data-full="../media/shots/ui_carte.jpg" alt="The map table" loading="lazy">
+          <img src="../media/shots/fleche_1280.webp" data-full="../media/shots/fleche.jpg" alt="The Hanging Reliquary" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galerie">
+  <div class="wrap">
+    <h2>Screenshots</h2>
+    <div class="gallery" id="gallery">
+      <figure class="big"><img loading="lazy" src="../media/shots/cendres_1280.webp" data-full="../media/shots/cendres.jpg" alt="The Pyromancer's Meteor against Ignar"><figcaption>Ashes — the Pyromancer against Ignar</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/catacombes_1280.webp" data-full="../media/shots/catacombes.jpg" alt="The Lord of the Ossuaries"><figcaption>Catacombs — the Lord of the Ossuaries</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/domaine_1280.webp" data-full="../media/shots/domaine.jpg" alt="Contagion and the Scythe of Reaping"><figcaption>Castle Grounds — the Reaping</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/invasion_1280.webp" data-full="../media/shots/invasion.jpg" alt="Void Invasion"><figcaption>Void Invasion</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/glitch_monde_1280.webp" data-full="../media/shots/glitch_monde.jpg" alt="Glitched rift"><figcaption>Inside a glitched rift</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/glitch_faille_1280.webp" data-full="../media/shots/glitch_faille.jpg" alt="Recursive rift"><figcaption>A recursive rift</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/hub_1280.webp" data-full="../media/shots/hub.jpg" alt="Hautecrête, the refuge"><figcaption>Hautecrête, the refuge</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/cimetiere_1280.webp" data-full="../media/shots/cimetiere.jpg" alt="The Summoner's bone army"><figcaption>Morteval Cemetery</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/castel_1280.webp" data-full="../media/shots/castel.jpg" alt="Arc against the Blood Count"><figcaption>The Castle — the Blood Count</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/fleche_1280.webp" data-full="../media/shots/fleche.jpg" alt="Frost Nova"><figcaption>The Hanging Reliquary</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/lisiere_1280.webp" data-full="../media/shots/lisiere.jpg" alt="The Ranger against imps"><figcaption>The Forest Edge</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/desert_1280.webp" data-full="../media/shots/desert.jpg" alt="The Stormcaller against the King of Bones"><figcaption>Dry Dunes — the King of Bones</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/cote_1280.webp" data-full="../media/shots/cote.jpg" alt="Wreckers' Beach"><figcaption>Wreckers' Beach</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/graveur_1280.webp" data-full="../media/shots/graveur.jpg" alt="The Runecarver's glyphs"><figcaption>Brumevase Marsh — the glyphs</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/graveur_rupture_1280.webp" data-full="../media/shots/graveur_rupture.jpg" alt="Word of Rupture"><figcaption>Brumevase Marsh — Word of Rupture</figcaption></figure>
+    </div>
+    <h3 class="kicker">Interface</h3>
+    <div class="gallery ui" id="gallery-ui">
+      <figure><img loading="lazy" src="../media/shots/ui_inventaire_1280.webp" data-full="../media/shots/ui_inventaire.jpg" alt="Inventory and character sheet"><figcaption>Inventory</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/ui_classe_1280.webp" data-full="../media/shots/ui_classe.jpg" alt="The Runecarver's Class tab"><figcaption>Class</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/ui_talents_1280.webp" data-full="../media/shots/ui_talents.jpg" alt="Talent tree"><figcaption>Talents</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/ui_competences_1280.webp" data-full="../media/shots/ui_competences.jpg" alt="Skills and supports"><figcaption>Skills</figcaption></figure>
+      <figure><img loading="lazy" src="../media/shots/ui_carte_1280.webp" data-full="../media/shots/ui_carte.jpg" alt="Map table"><figcaption>Map</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="trailer" class="alt">
+  <div class="wrap">
+    <h2>Trailer</h2>
+    <div class="video-frame">
+      <video controls preload="metadata" poster="../media/poster.jpg" playsinline>
+        <source src="../media/trailer.mp4" type="video/mp4">
+        Your browser cannot play this video — <a href="../media/trailer.mp4">here is the file</a>.
+      </video>
+    </div>
+  </div>
+</section>
+
+<section id="apercu" class="alt">
+  <div class="wrap">
+    <h2>Preview</h2>
+    <p class="sub">The game's own tooltips, on hover.</p>
+    <h3 class="kicker">Spells</h3>
+    <div class="kx-row" id="show-skills"></div>
+    <h3 class="kicker">Supports</h3>
+    <div class="kx-row" id="show-supports"></div>
+    <h3 class="kicker">Items</h3>
+    <div class="kx-row tiles" id="show-items"></div>
+
+    <div class="tal" id="tree"></div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <h2>Roadmap</h2>
+    <div class="roadmap">
+
+      <div class="rm-col">
+        <h3><span class="chip done">shipped in 0.7</span></h3>
+        <ul>
+          <li><strong>Runecarver</strong></li>
+          <li><strong>Space league and glitched rifts</strong></li>
+          <li><strong>Blood Castle as act II</strong></li>
+          <li><strong>Guards, curses, empowerments</strong></li>
+          <li><strong>Controller and Steam Deck</strong></li>
+        </ul>
+      </div>
+
+      <div class="rm-col">
+        <h3><span class="chip now">in progress</span></h3>
+        <ul>
+          <li><strong>Reworked melee and strikes</strong> — combos, impacts, new weapons.</li>
+          <li><strong>Beams</strong> — a full family of channelled spells.</li>
+          <li><strong>Heroes and monsters reworked</strong> — one by one.</li>
+          <li><strong>Free appearance</strong> — every class as a man or a woman.</li>
+          <li><strong>Intro cinematic</strong> and a full tutorial.</li>
+          <li><strong>Controller and Steam Deck</strong> — from launch to the last menu.</li>
+        </ul>
+      </div>
+
+      <div class="rm-col">
+        <h3><span class="chip next">next</span></h3>
+        <ul>
+          <li><strong>A seven-act campaign</strong> — the Ashen Spire, the Sunken Depths and the Desert join the adventure.</li>
+          <li><strong>A story</strong> — scenes in every act, an antagonist, an ending.</li>
+          <li><strong>World map</strong> — revealed as you travel.</li>
+          <li><strong>Side quests</strong></li>
+          <li><strong>Musical themes and voices</strong></li>
+        </ul>
+      </div>
+
+      <div class="rm-col">
+        <h3><span class="chip later">for 1.0</span></h3>
+        <ul>
+          <li><strong>Endgame maps</strong> — maps as loot and a currency, Ashes, to shape them.</li>
+          <li><strong>Reworked Tree of the Lands</strong> — one region per mechanic.</li>
+          <li><strong>Two new leagues</strong></li>
+          <li><strong>Pinnacle bosses</strong> and a new summoning archetype.</li>
+          <li><strong>Steam, English, demo</strong></li>
+          <li><strong>Open beta</strong> — on the Discord, before release.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="changelog" class="alt">
+  <div class="wrap">
+    <h2>Updates</h2>
+    <p class="sub">The game updates itself at launch. Patch notes below.</p>
+    <div class="log" id="log"></div>
+  </div>
+</section>
+
+<section id="communaute">
+  <div class="wrap">
+    <h2>Community</h2>
+    <div class="dl">
+      <div class="box">
+        <h3>Discord</h3>
+        <p class="dim">Help, builds, bug reports, suggestions and release announcements.</p>
+        <div class="actions left">
+          <a class="btn" href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Join the Discord</a>
+        </div>
+      </div>
+      <div class="box">
+        <h3>Wiki</h3>
+        <p class="dim">Skills, supports, items, monsters, maps and the game's formulas (in French for now).</p>
+        <div class="actions left">
+          <a class="btn ghost" href="../wiki/index.html">Open the wiki</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="telecharger" class="alt">
+  <div class="wrap">
+    <h2>Download</h2>
+    <p class="sub">Version 0.8.0, Windows 10/11 64-bit.</p>
+    <div class="dl">
+      <div class="box">
+        <div class="actions left">
+          <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.8.0/Ashfall.exe" data-dl="exe">Download Ashfall.exe</a>
+        </div>
+        <div class="meta">
+          Automatic updates at launch.
+          If Windows shows “Windows protected your PC”: <em>More info</em>, then <em>Run anyway</em>.
+          Saves are stored in <code>%APPDATA%\Godot\app_userdata\Ashfall</code>.
+        </div>
+      </div>
+      <div class="box">
+        <h3>Configuration</h3>
+        <ul>
+          <li>Windows 10/11 64-bit</li>
+          <li>Vulkan graphics card (GTX 900 or newer)</li>
+          <li>8 GB of RAM, 6 GB of disk space</li>
+          <li>Keyboard and mouse, or controller</li>
+          <li>In English and French</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="brand">ASHFALL</span><span class="sep">·</span>
+    <span>Version 0.8.0</span><span class="sep">·</span>
+    <a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Changelog (French)</a><span class="sep">·</span>
+    <a href="../wiki/index.html">Wiki</a><span class="sep">·</span>
+    <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden>
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">‹</button>
+  <img id="lb-img" alt="">
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Next">›</button>
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<div class="kx-tip" id="kx-tip" hidden></div>
+
+<script src="../data/i18n.js"></script>
+<script src="../data/en/showcase.js"></script>
+<script src="../data/en/tree.js"></script>
+<script src="../data/en/changelog.js"></script>
+<script src="../data/en/home.js"></script>
+<script src="../data/en/news.js"></script>
+<script src="../app.js"></script>
+<script src="../talent-tree.js"></script>
+</body>
+</html>
