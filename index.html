@@ -6,7 +6,7 @@
 <title>Ashfall — hack'n'slash fantasy gratuit</title>
 <meta name="description" content="Ashfall : hack'n'slash fantasy gratuit pour Windows. Neuf classes, des sorts modifiés par des supports, deux ligues et une campagne qui se rejoue en Cauchemar.">
 <meta property="og:title" content="Ashfall — hack'n'slash fantasy gratuit">
-<meta property="og:description" content="Version 0.7.0 : le Graveur de Runes, la ligue spatiale, les failles glitchées et le Castel Sanguin.">
+<meta property="og:description" content="Version 0.8.0 : tailles et estocs avec leurs ombres, rayons canalisés, hôtel des ventes, ligue Encre et jeu en anglais.">
 <meta property="og:image" content="https://berzerkk.github.io/ashfall-site/media/og.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -41,10 +41,10 @@
   <div class="veil"></div>
   <div class="inner wrap">
     <h1>ASHFALL</h1>
-    <div class="version">Version 0.7.0</div>
+    <div class="version">Version 0.8.0</div>
     <div class="actions">
-      <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/Ashfall.exe" data-dl="exe">Télécharger pour Windows</a>
-      <a class="btn ghost" href="#nouveautes">Nouveautés de la 0.7.0</a>
+      <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.8.0/Ashfall.exe" data-dl="exe">Télécharger pour Windows</a>
+      <a class="btn ghost" href="#nouveautes">Nouveautés de la 0.8.0</a>
     </div>
   </div>
   <div class="stats wrap" id="stats">
@@ -57,41 +57,36 @@
 
 <section id="nouveautes" class="alt">
   <div class="wrap">
-    <div class="eyebrow">Version 0.7.0</div>
-    <h2>Le Graveur de Runes, ligues et Castel</h2>
+    <div class="eyebrow">Version 0.8.0</div>
+    <h2>Lames, rayons, hôtel des ventes et ligue Encre</h2>
     <div class="split">
       <div class="split-text">
         <ul class="ticks">
-          <li><strong>Graveur de Runes</strong> : neuvième classe, des glyphes qui réagissent entre eux.</li>
-          <li><strong>Ligue spatiale</strong> : invasions de trou noir, expéditions, planètes, Dévoreur d'Étoiles.</li>
-          <li><strong>Failles glitchées</strong> : des cartes corrompues remplies de bugs, objets glitchés.</li>
-          <li><strong>Le Castel Sanguin</strong> devient l'acte II, avec quatre nouveaux gardiens.</li>
-          <li><strong>Porte-Peste</strong> repensé autour de l'érosion et de la Moisson.</li>
-          <li><strong>Passe de combat</strong> et cosmétiques, gratuits.</li>
-          <li><strong>Manette</strong> et Steam Deck.</li>
+          <li><strong>Tailles et estocs</strong> : deux familles de mêlée, des estocs de foudre, de givre et de gangrène.</li>
+          <li><strong>Ombres</strong> : des copies de votre héros qui portent le même estoc autour de la cible.</li>
+          <li><strong>Rayons canalisés</strong> de braise, de givre, de foudre et du néant, avec la réfraction.</li>
+          <li><strong>Hôtel des ventes</strong> pour les personnages en mode Échange, filtres de lignes ET / OU / AU MOINS.</li>
+          <li><strong>Ligue Encre</strong> : des pages blanches qui mangent le monde, la Grue et le Grand Cahier.</li>
+          <li><strong>Jeu en anglais</strong>, aides de jeu repensées, nouvelles icônes d'objets.</li>
         </ul>
         <p class="more"><a href="#changelog">Le journal complet →</a></p>
       </div>
-      <figure class="shot-pair">
-        <img src="media/shots/graveur_rupture_1280.webp" data-full="media/shots/graveur_rupture.jpg" alt="Verbe de Rupture du Graveur de Runes" loading="lazy">
-        <img src="media/shots/invasion_1280.webp" data-full="media/shots/invasion.jpg" alt="Invasion du Vide" loading="lazy">
-      </figure>
     </div>
     <div class="fresh">
       <div class="fresh-card">
-        <h3>8 gardes</h3>
-        <p>Instantanées, lancées sans interrompre l'action.</p>
-        <div class="kx-row" data-fresh="guard"></div>
+        <h3>Tailles</h3>
+        <p>Des arcs qui grandissent à chaque frappe multiple enchaînée.</p>
+        <div class="kx-row" data-fresh="slash"></div>
       </div>
       <div class="fresh-card">
-        <h3>7 malédictions</h3>
-        <p>Une seule par ennemi. Avec Aura Maudite, elle devient une zone autour de vous.</p>
-        <div class="kx-row" data-fresh="curse"></div>
+        <h3>Estocs</h3>
+        <p>Une pointe fine qui traverse, répétée par vos ombres.</p>
+        <div class="kx-row" data-fresh="spike"></div>
       </div>
       <div class="fresh-card">
-        <h3>Renforcements</h3>
-        <p>Huit secondes de puissance, chacun avec son effet.</p>
-        <div class="kx-row" data-fresh="empower"></div>
+        <h3>Rayons</h3>
+        <p>Canalisés, arrêtés par le premier ennemi, réfractés vers les autres.</p>
+        <div class="kx-row" data-fresh="beam"></div>
       </div>
     </div>
   </div>
@@ -256,6 +251,7 @@
 <section id="roadmap">
   <div class="wrap">
     <h2>Feuille de route</h2>
+    <p class="sub">Cap sur la 1.0.</p>
     <div class="roadmap">
 
       <div class="rm-col">
@@ -272,32 +268,40 @@
       <div class="rm-col">
         <h3><span class="chip now">en cours</span></h3>
         <ul>
-          <li><strong>Campagne refaite</strong> — la suite de la forêt de Verdeclat, carte par carte.</li>
-          <li><strong>Nouveaux actes</strong> — la Flèche Cendrée et les Fonds Engloutis dans la campagne.</li>
-          <li><strong>Améliorations visuelles</strong> — sols, eau, effets de sorts et d'impacts.</li>
-          <li><strong>Interface</strong> — fiches d'objets et de sorts unifiées.</li>
+          <li><strong>Mêlée et frappes refaites</strong> — enchaînements, impacts, nouvelles armes.</li>
+          <li><strong>Rayons</strong> — une famille complète de sorts canalisés.</li>
+          <li><strong>Héros et monstres repris</strong> — un par un.</li>
+          <li><strong>Apparence libre</strong> — chaque classe au masculin ou au féminin.</li>
+          <li><strong>Cinématique d'introduction</strong> et tutoriel complet.</li>
+          <li><strong>Manette et Steam Deck</strong> — du lancement au dernier menu.</li>
         </ul>
       </div>
 
       <div class="rm-col">
-        <h3><span class="chip next">prévu</span></h3>
+        <h3><span class="chip next">ensuite</span></h3>
         <ul>
-          <li><strong>Nouvelles classes</strong></li>
-          <li><strong>Nouveaux supports</strong>, y compris des supports qui se contredisent.</li>
-          <li><strong>Plus de légendaires</strong> qui créent une build.</li>
-          <li><strong>Craft</strong> — verrouillage d'affixe.</li>
+          <li><strong>Campagne en sept actes</strong> — la Flèche Cendrée, les Fonds Engloutis et le Désert rejoignent l'aventure.</li>
+          <li><strong>Une histoire</strong> — des scènes à chaque acte, un antagoniste, une fin.</li>
+          <li><strong>Carte du monde</strong> — dévoilée au fil du voyage.</li>
+          <li><strong>Quêtes annexes</strong></li>
+          <li><strong>Thèmes musicaux et voix</strong></li>
         </ul>
       </div>
 
       <div class="rm-col">
-        <h3><span class="chip later">plus tard</span></h3>
+        <h3><span class="chip later">pour la 1.0</span></h3>
         <ul>
-          <li><strong>Mécaniques dans les cartes</strong> — événements et règles de zone.</li>
-          <li><strong>Fin de jeu</strong> — mesurer une build et la pousser.</li>
+          <li><strong>Cartes de fin de jeu</strong> — des cartes en butin et une monnaie, les Cendres, pour les façonner.</li>
+          <li><strong>Arbre des Terres refait</strong> — une région par mécanique.</li>
+          <li><strong>Deux nouvelles ligues</strong></li>
+          <li><strong>Boss pinacles</strong> et nouvel archétype d'invocation.</li>
+          <li><strong>Steam, anglais, démo</strong></li>
+          <li><strong>Bêta ouverte</strong> — sur le Discord, avant la sortie.</li>
         </ul>
       </div>
 
     </div>
+    <p class="rm-note">Après la 1.0 : modes Solitaire et Échange, hôtel des ventes, saisons, classements.</p>
   </div>
 </section>
 
@@ -334,13 +338,13 @@
 <section id="telecharger" class="alt">
   <div class="wrap">
     <h2>Télécharger</h2>
-    <p class="sub">Version 0.7.0, Windows 10/11 64 bits.</p>
+    <p class="sub">Version 0.8.0, Windows 10/11 64 bits.</p>
     <div class="dl">
       <div class="box">
         <h3>Ashfall.exe</h3>
         <p class="dim" data-size="exe">2,07 Go (2 217 863 904 octets)</p>
         <div class="actions left">
-          <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.7.0/Ashfall.exe" data-dl="exe">Télécharger Ashfall.exe</a>
+          <a class="btn" href="https://pub-9592b26e32aa4c2db356c1de20f24128.r2.dev/v0.8.0/Ashfall.exe" data-dl="exe">Télécharger Ashfall.exe</a>
         </div>
         <div class="meta">
           Mises à jour automatiques au lancement.
@@ -365,7 +369,7 @@
 <footer>
   <div class="wrap">
     <span class="brand">ASHFALL</span><span class="sep">·</span>
-    <span>Version 0.7.0</span><span class="sep">·</span>
+    <span>Version 0.8.0</span><span class="sep">·</span>
     <a href="https://github.com/berzerkk/ashfall-releases/blob/main/CHANGELOG.md">Journal des changements</a><span class="sep">·</span>
     <a href="wiki/index.html">Wiki</a><span class="sep">·</span>
     <a href="https://discord.gg/RsNAycH7mZ" target="_blank" rel="noopener">Discord</a>

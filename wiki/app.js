@@ -12,6 +12,7 @@ const fieldNames = {name:'Nom', desc:'Description', description:'Description', b
 let catalogue, section = 'skills', selected = '', filter = '', limit = 120, requestActive = false;
 let byId = new Map();
 
+let editor = null; // mode édition (wiki local uniquement)
 const order = [
   ['Personnage',['classes','ascensions','trees','talents','atlas']],
   ['Compétences',['skills','supports']],
@@ -67,8 +68,27 @@ function renderList() {
   if (position >= limit) limit = Math.ceil((position + 1) / 120) * 120;
   $('#results').innerHTML = rows.slice(0,limit).map(e => `<a class="result ${selected === e.key ? 'active' : ''}" href="${href(e)}">${icon(e)}<span class="result-text"><span class="result-name">${escape(e.name)}</span><span class="result-id">${escape(secondary(e))}</span></span></a>`).join('') || '<p class="empty">Aucune entrée ne correspond à cette recherche.</p>';
   if (rows.length > limit) $('#results').insertAdjacentHTML('beforeend', '<button class="result more">Afficher les 120 entrées suivantes</button>');
-  $('#detail').innerHTML = rows.length ? detail(rows.find(e => e.key === selected)) : '<p class="empty">Les données sont lues directement dans le jeu.</p>';
+  $('#detail').innerHTML = rows.length ? pager(rows, position) + detail(rows.find(e => e.key === selected)) : '<p class="empty">Les données sont lues directement dans le jeu.</p>';
+  $('#results .result.active')?.scrollIntoView?.({ block: 'nearest' });
 
+}
+function pager(rows, position) {
+  if (rows.length < 2 || position < 0) return '';
+  const link = (row, label, cls) => row ? `<a class="pager-link ${cls}" href="${href(row)}" title="${escape(row.name)}">${label}</a>` : `<span class="pager-link ${cls} off">${label}</span>`;
+  const name = catalogue.sections.find(s => s.id === section)?.name || 'Tout le contenu';
+  return `<div class="pager"><span class="pager-path">${escape(name)} <b>${position + 1}</b> / ${rows.length}</span>${link(rows[position - 1], '← Précédent', 'prev')}${link(rows[position + 1], 'Suivant →', 'next')}</div>`;
+}
+const FACT_SKIP = new Set(['name','id','desc','description','text','lore','color','icon','model','path','tags']);
+function factSheet(entry) {
+  const data = entry.data;
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return '';
+  const facts = Object.entries(data).filter(([key, v]) => !FACT_SKIP.has(key) && (typeof v === 'number' || typeof v === 'boolean' || (typeof v === 'string' && v.length <= 26 && !v.startsWith('res:')))).slice(0, 12);
+  if (facts.length < 2) return '';
+  return '<div class="facts">' + facts.map(([key, v]) => {
+    const label = catalogue.statLabels[key] ? statName(key) : fieldNames[key] || key;
+    const value = typeof v === 'number' ? Number(v).toLocaleString('fr-FR', { maximumFractionDigits: 3 }) : renderValue(v, key, 1);
+    return `<div class="fact"><span>${escape(label)}</span><b>${value}</b></div>`;
+  }).join('') + '</div>';
 }
 function affixRolls(entry) {
   const p = entry.affixPools;
@@ -296,6 +316,7 @@ function renderValue(value, key = '', depth = 0) {
   if (typeof value === 'number') return escape(catalogue.statLabels[key] ? statSentence(key,value) : value);
   if (typeof value === 'string') {
     if (['slot','kind'].includes(key)) return escape(catalogue.slotLabels[value] || catalogue.kindLabels[value] || value);
+    if (/^#[0-9a-f]{6}$/i.test(value)) return `<span class="swatch"><svg viewBox="0 0 10 10" aria-hidden="true"><rect width="10" height="10" rx="2" fill="${escape(value)}"/></svg>${escape(value)}</span>`;
     if (['links','flags','mech','stat','id','skills','supports','start'].includes(key)) return reference(value);
     return escape(plain(value));
   }
@@ -312,10 +333,12 @@ function detail(entry) {
   const data = entry.data;
   const tags = data?.tags || [];
   const description = entry.description || (typeof data === 'string' ? data : '');
-  return `<div class="entry-heading">${icon(entry,true)}<div><h2>${escape(entry.name)}</h2><div class="technical">${escape(entry.id)}</div></div></div>` +
+  return `<div class="entry-heading sec-${escape(entry.section)}">${icon(entry,true)}<div><h2>${escape(entry.name)} ${badge(entry)}</h2><div class="technical">${escape(entry.id)}</div></div>${editor ? editor.button(entry) : ''}</div>` +
+    (editor?.isEditing(entry) ? editor.form(entry) : '') +
     (entry.parent ? `<div class="technical">${escape(catalogue.slotLabels[entry.parent] || entry.parent)}</div>` : '') +
-    (tags.length ? `<div class="tags">${tags.map(t=>`<span class="tag">${escape(catalogue.tagLabels[t] || t)}</span>`).join('')}</div>` : '') +
+    (tags.length ? `<div class="tags">${tags.map(t=>`<span class="tag tag-${escape(t)}">${escape(catalogue.tagLabels[t] || t)}</span>`).join('')}</div>` : '') +
     (description ? `<p class="description">${escape(plain(description))}</p>` : '') +
+    factSheet(entry) +
     `<h3>Données complètes</h3>${data && typeof data === 'object' ? table(data) : renderValue(data)}` +
     `<h3>Source</h3><details><summary>Voir les données brutes</summary><pre class="raw">${escape(JSON.stringify(data,null,2))}</pre></details>` +
     '' +
@@ -335,6 +358,8 @@ function route() {
 }
 async function refresh() {
   if (requestActive) return;
+  // Ne pas reconstruire une fiche en cours de modification.
+  if (editor?.active()) return;
   requestActive = true;
   try {
     const response = await fetch('catalogue.json',{cache:'no-store'});
@@ -358,9 +383,26 @@ async function refresh() {
   } finally { requestActive = false; }
 }
 $('#search').addEventListener('input',()=>{limit=120;renderList();});
+document.addEventListener('keydown', event => {
+  const typing = event.target.closest && event.target.closest('input, textarea, select, [contenteditable]');
+  if (event.key === 'Escape' && event.target === $('#search')) { $('#search').value = ''; limit = 120; renderList(); $('#search').blur(); return; }
+  if (typing || event.ctrlKey || event.metaKey || event.altKey) return;
+  if (event.key === '/') { event.preventDefault(); $('#search').focus(); return; }
+  const step = event.key === 'ArrowDown' || event.key === 'j' ? 1 : event.key === 'ArrowUp' || event.key === 'k' ? -1 : 0;
+  if (!step) return;
+  const links = [...document.querySelectorAll('#results a.result')];
+  const target = links[links.findIndex(a => a.classList.contains('active')) + step];
+  if (target) { event.preventDefault(); location.hash = target.getAttribute('href'); }
+});
 $('#facet').addEventListener('change',event=>{filter=event.target.value;limit=120;renderList();});
 $('#results').addEventListener('click',event=>{if(event.target.closest('.more')){limit+=120;renderList();}});
-window.addEventListener('hashchange',()=>{if(catalogue)route();});
+window.addEventListener('hashchange',event=>{
+  if (editor?.active()) {
+    if (editor.dirty() && !confirm('Abandonner les modifications non enregistrées ?')) { history.replaceState(null, '', event.oldURL); return; }
+    editor.cancel();
+  }
+  if(catalogue)route();
+});
 document.addEventListener('error',event=>{
   if (!(event.target instanceof HTMLImageElement)) return;
   const image=event.target,parent=image.parentElement;
