@@ -63,6 +63,10 @@
       var cores = opts.cores || {};
       var labels = opts.labels || {};
       var total = opts.points || 0;
+      // Mode interactif (créateur de build) : opts.onNode(n, +1/-1), opts.onCore(tier, ev) ; prérequis au rang max (règle du jeu)
+      var byId = {};
+      nodes.forEach(function (n) { byId[n.id] = n; });
+      var reqOk = function (n) { return !n.req || !byId[n.req] || (alloc[n.req] || 0) >= (byId[n.req].max || 1); };
       var thr = tree.thresholds || [0, 3, 6, 9, 12, 15];
       var maxCol = 0, maxRow = 0;
       nodes.forEach(function (n) { maxCol = Math.max(maxCol, n.col); maxRow = Math.max(maxRow, n.row); });
@@ -105,6 +109,10 @@
             tier.choices.forEach(function (c) { tip += '<br>· <strong>' + esc(c.name) + '</strong> — ' + esc(c.desc || ''); });
           }
           bind(b, tip);
+          if (opts.onCore) {
+            b.addEventListener('click', function (ev) { opts.onCore(tier, ev, b); });
+            b.addEventListener('contextmenu', function (ev) { ev.preventDefault(); opts.onCore(tier, ev, b, true); });
+          }
           row.appendChild(b);
         });
         coreWrap.appendChild(row);
@@ -159,7 +167,7 @@
         var isMed = n.kind === 'medium';
         var sz = isMed ? SZ_M : SZ_S;
         var p = pos[n.id];
-        var canAl = rank < n.max && total >= colNeed(thr, n.col) && (!n.req || (alloc[n.req] || 0) > 0);
+        var canAl = rank < n.max && total >= colNeed(thr, n.col) && reqOk(n) && (opts.canSpend === undefined || opts.canSpend);
         var full = rank >= n.max;
         var nc = rank > 0 ? treeCol : (canAl ? '#4fc3b0' : '#3a4352');
 
@@ -188,6 +196,12 @@
         badge.textContent = rank + '/' + n.max;
         el.appendChild(badge);
         bind(el, nodeTip(n, alloc, total, thr, labels));
+        if (opts.onNode) {
+          (function (nn) {
+            el.addEventListener('click', function (ev) { opts.onNode(nn, ev.shiftKey ? -1 : 1); });
+            el.addEventListener('contextmenu', function (ev) { ev.preventDefault(); opts.onNode(nn, -1); });
+          })(n);
+        }
         canvas.appendChild(el);
 
         var lbl = document.createElement('div');

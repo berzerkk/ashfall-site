@@ -1,0 +1,128 @@
+[
+ {
+  "id": "createur-de-build",
+  "url": "https://berzerkk.github.io/ashfall-site/news/createur-de-build.html",
+  "title": "Le créateur de build est en ligne",
+  "tag": "Site",
+  "summary": "Planifiez votre personnage sur le site : équipement, compétences et supports, classe, talents, Arbre des Terres et système solaire, avec les vraies règles du jeu.",
+  "date": "2026-11-17",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/builder.jpg"
+ },
+ {
+  "id": "0-8-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-8-0.html",
+  "title": "Ashfall 0.8.0 — Lames, rayons, hôtel des ventes et ligue Encre",
+  "tag": "0.8.0",
+  "summary": "Deux familles de mêlée et vos ombres, des rayons canalisés, un hôtel des ventes, la ligue Encre et le jeu en anglais.",
+  "date": "2026-11-16",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/lames_ombres.jpg"
+ },
+ {
+  "id": "0-7-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-7-0.html",
+  "title": "Ashfall 0.7.0 — Le Graveur de Runes, ligues et Castel",
+  "tag": "0.7.0",
+  "summary": "Le Graveur de Runes, les invasions spatiales, les failles glitchées et le Castel Sanguin en acte II.",
+  "date": "2026-11-14",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/graveur_rupture.jpg"
+ },
+ {
+  "id": "0-6-5",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-6-5.html",
+  "title": "Ashfall 0.6.5 — Monstres vivants, boss redoutables et sortie au grand jour",
+  "tag": "0.6.5",
+  "summary": "Les monstres des premiers niveaux bougent comme de vraies créatures, chaque boss a ses attaques et les catacombes débouchent à l'air libre.",
+  "date": "2026-11-08",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/catacombes.jpg"
+ },
+ {
+  "id": "0-6-4",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-6-4.html",
+  "title": "Ashfall 0.6.4 — Cimetière, catacombes et nouvelle forge",
+  "tag": "0.6.4",
+  "summary": "La forêt de Verdeclat refaite, un cimetière sous la pluie, des catacombes d'ossements, l'auto-craft à la forge et une campagne jusqu'au niveau 55.",
+  "date": "2026-11-08",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/cimetiere.jpg"
+ },
+ {
+  "id": "0-6-3",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-6-3.html",
+  "title": "Ashfall 0.6.3 — Bestiaires et profondeurs",
+  "tag": "0.6.3",
+  "summary": "Un bestiaire fait main pour chaque acte, des décors qui s'animent, trois actes en avant-première et un vrai tir à l'arc.",
+  "date": "2026-11-05",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/desert.jpg"
+ },
+ {
+  "id": "0-6-2",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-6-2.html",
+  "title": "Ashfall 0.6.2 — Os, orages et grand ménage",
+  "tag": "0.6.2",
+  "summary": "L'invocateur reçoit une vraie armée, le monde gagne la pluie, l'orage et la nuit, les talents sont remis à plat.",
+  "date": "2026-11-04",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/ui_talents.jpg"
+ },
+ {
+  "id": "0-6-1",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-6-1.html",
+  "title": "Ashfall 0.6.1 — Braises et embruns",
+  "tag": "0.6.1",
+  "summary": "Le feu repensé de fond en comble, de vraies musiques, des ambiances enregistrées et des sorts qui s'enchaînent librement.",
+  "date": "2026-11-02",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/cendres.jpg"
+ },
+ {
+  "id": "0-6-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-6-0.html",
+  "title": "Ashfall 0.6.0 — La Côte des Naufrageurs",
+  "tag": "0.6.0",
+  "summary": "Un quatrième acte au bord de la mer, une île refaite, les attributs, des arbres de talents repensés et un nouvel écran titre.",
+  "date": "2026-11-02",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/cote.jpg"
+ },
+ {
+  "id": "0-5-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-5-0.html",
+  "title": "Ashfall 0.5.0 — La forge des cendres",
+  "tag": "0.5.0",
+  "summary": "La forge refaite de fond en comble, une seule compétence de départ par classe et des icônes nettes à toutes les échelles.",
+  "date": "2026-11-01",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/ui_inventaire.jpg"
+ },
+ {
+  "id": "0-4-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-4-0.html",
+  "title": "Ashfall 0.4.0 — Trois actes, quinze donjons",
+  "tag": "0.4.0",
+  "summary": "Une campagne en trois actes et quinze donjons, des attaques ennemies lisibles et une palette par classe.",
+  "date": "2026-10-31",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/ui_carte.jpg"
+ },
+ {
+  "id": "0-3-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-3-0.html",
+  "title": "Ashfall 0.3.0 — Terres, légendaires et renouveau visuel",
+  "tag": "0.3.0",
+  "summary": "Huit classes jouables, trente légendaires de plus, l'Arbre des Terres et un nouveau menu principal.",
+  "date": "2026-10-30",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/ui_classe.jpg"
+ },
+ {
+  "id": "0-2-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-2-0.html",
+  "title": "Ashfall 0.2.0 — Canalisation, forge et confort",
+  "tag": "0.2.0",
+  "summary": "L'Invocateur, la canalisation à cumuls, un Tourbillon refait et une forge plus claire.",
+  "date": "2026-10-26",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/ui_competences.jpg"
+ },
+ {
+  "id": "0-1-0",
+  "url": "https://berzerkk.github.io/ashfall-site/news/0-1-0.html",
+  "title": "Ashfall 0.1.0 — Première version jouable",
+  "tag": "0.1.0",
+  "summary": "La première version jouable : une campagne dans la forêt de Verdeclat, trois classes, onze arbres de talents et la forge.",
+  "date": "2026-10-23",
+  "image": "https://berzerkk.github.io/ashfall-site/media/shots/lisiere.jpg"
+ }
+]
